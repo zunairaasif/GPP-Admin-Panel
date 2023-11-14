@@ -34,7 +34,10 @@ const SideMenu = () => {
         <Link style={style.link} to="/trips">
           <Grid
             sx={
-              activeLink === "/trips" || activeLink === "/new-trip"
+              activeLink === "/trips" ||
+              activeLink === "/new-trip" ||
+              (activeLink && activeLink.startsWith("/edit-trip/")) ||
+              (activeLink && activeLink.startsWith("/view-details/"))
                 ? style.menuItemSelected
                 : style.menuItem
             }
@@ -47,7 +50,9 @@ const SideMenu = () => {
         <Link style={style.link} to="/services">
           <Grid
             sx={
-              activeLink === "/services" || activeLink === "/new-service"
+              activeLink === "/services" ||
+              activeLink === "/new-service" ||
+              (activeLink && activeLink.startsWith("/edit-service/"))
                 ? style.menuItemSelected
                 : style.menuItem
             }
@@ -60,7 +65,9 @@ const SideMenu = () => {
         <Link style={style.link} to="/categories">
           <Grid
             sx={
-              activeLink === "/categories" || activeLink === "/new-category"
+              activeLink === "/categories" ||
+              activeLink === "/new-category" ||
+              (activeLink && activeLink.startsWith("/edit-category/"))
                 ? style.menuItemSelected
                 : style.menuItem
             }
@@ -73,7 +80,9 @@ const SideMenu = () => {
         <Link style={style.link} to="/lotteries">
           <Grid
             sx={
-              activeLink === "/lotteries" || activeLink === "/new-lottery"
+              activeLink === "/lotteries" ||
+              activeLink === "/new-lottery" ||
+              (activeLink && activeLink.startsWith("/edit-lottery/"))
                 ? style.menuItemSelected
                 : style.menuItem
             }

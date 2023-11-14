@@ -6,26 +6,34 @@ import React, { useEffect, useState } from "react";
 import style from "./style";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
+import Loader from "../../components/Loader";
 import Confirm from "../../components/ConfirmMsg";
+import AlertMessage from "../../components/Alert";
 
 const Categories = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [categories, setCategories] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [openErrorSnackbar, setOpenErrorSnackbar] = useState(false);
   const [categoryIdToDelete, setCategoryIdToDelete] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${baseUrl}/categories/category`)
       .then((response) => {
         const category = response.data.categories;
         setCategories(category);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error:", error);
+        setLoading(false);
       });
-  }, []);
+  }, [baseUrl]);
 
   const handleNewCategory = () => {
     navigate("/new-category");
@@ -41,11 +49,13 @@ const Categories = () => {
   };
 
   const handleClose = () => {
-    setCategoryIdToDelete(null);
     setOpen(false);
+    setCategoryIdToDelete(null);
   };
 
   const handleDelete = async () => {
+    setLoading(true);
+    setOpen(false);
     const token = localStorage.getItem("token");
 
     const headers = {
@@ -64,19 +74,41 @@ const Categories = () => {
 
       console.log("Category deleted successfully");
       setCategories(updatedCategories);
+
+      setLoading(false);
+      setOpenSnackbar(true);
     } catch (error) {
       console.error("Error deleting category:", error);
+      setLoading(false);
+      setOpenErrorSnackbar(true);
     } finally {
       handleClose();
+      setLoading(false);
     }
   };
 
   return (
     <Layout>
+      <Loader open={loading} />
+
       <Confirm
         open={open}
         handleClose={handleClose}
         handleDelete={handleDelete}
+      />
+
+      <AlertMessage
+        open={openSnackbar}
+        onClose={() => setOpenSnackbar(false)}
+        severity="success"
+        text="Category deleted successfully!"
+      />
+
+      <AlertMessage
+        open={openErrorSnackbar}
+        onClose={() => setOpenErrorSnackbar(false)}
+        severity="error"
+        text="Error deleting category!"
       />
 
       <Grid container sx={style.container}>
@@ -96,7 +128,7 @@ const Categories = () => {
             item
             container
             gap={3}
-            md={3.75}
+            md={5.75}
             key={value._id}
             sx={style.block}
           >

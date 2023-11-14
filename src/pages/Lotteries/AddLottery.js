@@ -1,28 +1,41 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { Grid, Box, TextField, Button } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import style from "./style";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
+import Loader from "../../components/Loader";
+import AlertMessage from "../../components/Alert";
 
 const AddLottery = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
     joinPrice: "",
     winPrice: "",
-    endTime: "",
+    endTime: null,
   });
 
   const handleInputChange = (field) => (event) => {
     setFormData({ ...formData, [field]: event.target.value });
   };
 
+  const handleDateChange = (field) => (date) => {
+    setFormData({ ...formData, [field]: date });
+  };
+
   const handleAddLottery = () => {
+    setLoading(true);
     const token = localStorage.getItem("token");
 
     const headers = {
@@ -37,16 +50,32 @@ const AddLottery = () => {
       .then((response) => {
         if (response.data.success) {
           console.log("Lottery API:", response.data);
+          setLoading(false);
           navigate("/lotteries");
-        } else console.error("Error:", response.data.error);
+        } else {
+          console.error("Error:", response.data.error);
+          setLoading(false);
+          setOpenSnackbar(true);
+        }
       })
       .catch((error) => {
         console.error("Error", error);
+        setLoading(false);
+        setOpenSnackbar(true);
       });
   };
 
   return (
     <Layout>
+      <Loader open={loading} />
+
+      <AlertMessage
+        open={openSnackbar}
+        onClose={() => setOpenSnackbar(false)}
+        severity="error"
+        text="Error adding a new lottery!"
+      />
+
       <Text variant="h3" text="Add a new lottery" sx={style.heading} />
 
       <Grid container gap={8} sx={style.flex}>
@@ -62,13 +91,17 @@ const AddLottery = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter end time" />
-            <TextField
-              size="small"
-              sx={style.label}
-              value={formData.endTime}
-              onChange={handleInputChange("endTime")}
-            />
+            <Text variant="h6" text="End time:" />
+
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <DatePicker
+                  label="Select end time"
+                  value={formData.endTime}
+                  onChange={handleDateChange("endTime")}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
           </Box>
         </Grid>
 

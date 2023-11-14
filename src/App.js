@@ -10,10 +10,12 @@ import Lotteries from "./pages/Lotteries";
 import Categories from "./pages/Categories";
 import { theme } from "../src/styles/Theme";
 import AddTrip from "./pages/Trips/AddTrip";
-import ViewDetails from "./components/ViewDetails";
+import EditTrip from "./pages/Trips/EditTrip";
+import ViewDetails from "./pages/Trips/TripDetails";
 import AddService from "./pages/Services/AddService";
 import AddLottery from "./pages/Lotteries/AddLottery";
 import EditLottery from "./pages/Lotteries/EditLottery";
+import EditService from "./pages/Services/EditServices";
 import AddCategory from "./pages/Categories/AddCategory";
 import EditCategory from "./pages/Categories/EditCategory";
 
@@ -25,10 +27,12 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/trips" element={<Trips />} />
-            <Route path="/view-details" element={<ViewDetails />} />
+            <Route path="/view-details/:tripId" element={<ViewDetails />} />
             <Route path="/new-trip" element={<AddTrip />} />
+            <Route path="/edit-trip/:tripId" element={<EditTrip />} />
             <Route path="/services" element={<Services />} />
             <Route path="/new-service" element={<AddService />} />
+            <Route path="/edit-service/:serviceId" element={<EditService />} />
             <Route path="/categories" element={<Categories />} />
             <Route path="/new-category" element={<AddCategory />} />
             <Route

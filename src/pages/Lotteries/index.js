@@ -6,34 +6,38 @@ import React, { useEffect, useState } from "react";
 import style from "./style";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
+import Loader from "../../components/Loader";
 import Confirm from "../../components/ConfirmMsg";
-import { SettingsBluetoothTwoTone } from "@mui/icons-material";
 
 const Lotteries = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [lotteries, setLotteries] = useState([]);
   const [lotteryIdToDelete, setLotteryIdToDelete] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`${baseUrl}/lottery/lottery`)
       .then((response) => {
         const lottery = response.data.lotteries;
         setLotteries(lottery);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error:", error);
+        setLoading(false);
       });
-  }, []);
+  }, [baseUrl]);
 
   const handleNewLottery = () => {
     navigate("/new-lottery");
   };
 
-  const handleEditLottery = (lotteryId) => {
-    navigate(`/edit-lottery/${lotteryId}`);
+  const handleEditLottery = (lotteryId, lotteryDetails) => {
+    navigate(`/edit-lottery/${lotteryId}`, { state: { lotteryDetails } });
   };
 
   const handleOpen = (lotteryId) => {
@@ -47,6 +51,8 @@ const Lotteries = () => {
   };
 
   const handleDelete = async () => {
+    setOpen(false);
+    setLoading(true);
     const token = localStorage.getItem("token");
 
     const headers = {
@@ -64,15 +70,19 @@ const Lotteries = () => {
 
       console.log("Lottery deleted successfully");
       setLotteries(updatedLottery);
+      setLoading(false);
     } catch (error) {
-      console.error("Error deleting category:", error);
+      console.error("Error deleting lottery:", error);
+      setLoading(false);
     } finally {
       handleClose();
+      setLoading(false);
     }
   };
 
   return (
     <Layout>
+      <Loader open={loading} />
       <Confirm
         open={open}
         handleClose={handleClose}
@@ -116,7 +126,7 @@ const Lotteries = () => {
               <Button
                 variant="contained"
                 sx={style.btn}
-                onClick={() => handleEditLottery(value._id)}
+                onClick={() => handleEditLottery(value._id, value)}
               >
                 <Text variant="h6" text="Edit" />
               </Button>

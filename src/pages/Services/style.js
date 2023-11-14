@@ -38,6 +38,7 @@ const style = {
 
   flex: {
     display: "flex",
+    marginBottom: "30px",
   },
   formContainer: {
     display: "flex",

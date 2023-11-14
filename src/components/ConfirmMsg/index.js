@@ -4,10 +4,8 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogContentText,
 } from "@mui/material";
-import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 
 import Text from "../Text";
 

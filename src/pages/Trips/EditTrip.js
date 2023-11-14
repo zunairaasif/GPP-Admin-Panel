@@ -11,8 +11,8 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -24,31 +24,32 @@ import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
 
-const AddTrip = () => {
+const EditTrip = () => {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [categories, setCategories] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [selectedServices, setSelectedServices] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
 
+  const initialTripData = state?.tripDetails;
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    days: "",
+    id: initialTripData._id,
+    name: initialTripData.name,
+    description: initialTripData.description,
+    price: initialTripData.price,
+    days: initialTripData.days,
     startDate: null,
     endDate: null,
-    status: "",
-    services: "",
-    image: "",
-    category: [],
-    bookingAmount: "",
-    seatOfChoicePrice: "",
-    totalSeats: "",
-    loyaltyPoints: "",
+    status: initialTripData.status,
+    services: initialTripData.services,
+    image: initialTripData.image,
+    category: initialTripData.category,
+    bookingAmount: initialTripData.bookingAmount,
+    seatOfChoicePrice: initialTripData.seatOfChoicePrice,
+    totalSeats: initialTripData.totalSeats,
+    loyaltyPoints: initialTripData.loyaltyPoints,
   });
 
   useEffect(() => {
@@ -86,20 +87,12 @@ const AddTrip = () => {
     setFormData({ ...formData, [field]: event.target.value });
   };
 
-  const handleServiceChange = (serviceId) => {
-    // Toggle the selected state of the service
-    setSelectedServices((prevSelectedServices) =>
-      prevSelectedServices.includes(serviceId)
-        ? prevSelectedServices.filter((id) => id !== serviceId)
-        : [...prevSelectedServices, serviceId]
-    );
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFormData({ ...formData, icon: file });
   };
 
-  const handleCategoryChange = (categoryId) => {
-    setSelectedCategory(categoryId);
-  };
-
-  const handleAddTrip = () => {
+  const handleEditTrip = () => {
     setLoading(true);
     const token = localStorage.getItem("token");
 
@@ -108,31 +101,24 @@ const AddTrip = () => {
       Authorization: `Bearer ${token}`,
     };
 
-    const postData = {
-      ...formData,
-      services: selectedServices, // Add the selected services array
-      category: selectedCategory, // Add the selected category string
-    };
-
     axios
-      .post(`${baseUrl}/trips/trip`, postData, {
+      .put(`${baseUrl}/trips/trip`, formData, {
         headers: headers,
       })
       .then((response) => {
-        if (response.data.success) {
-          console.log("Trip added successfully:", response.data);
+        const data = response.data;
+
+        if (data.success) {
+          console.log("Trip api:", data.message);
           setLoading(false);
           navigate("/trips");
           setOpenSnackbar(true);
-        } else {
-          console.error("Error:", response.data);
-          setLoading(false);
-          setOpenSnackbar(true);
-        }
+        } else console.error("Error:", data.error);
       })
       .catch((error) => {
-        console.error("Error posting:", error);
+        console.error("Error", error);
         setLoading(false);
+        setOpenSnackbar(true);
       });
   };
 
@@ -144,10 +130,10 @@ const AddTrip = () => {
         open={openSnackbar}
         onClose={() => setOpenSnackbar(false)}
         severity="error"
-        text="Error adding a new trip!"
+        text="Error updating this trip!"
       />
 
-      <Text variant="h3" text="Add a new trip" sx={style.heading} />
+      <Text variant="h3" text="Edit trip" sx={style.heading} />
 
       <Grid container gap={8} sx={style.flex}>
         <Grid sx={style.formContainer} gap={4}>
@@ -197,36 +183,32 @@ const AddTrip = () => {
             <Text variant="h6" text="Choose services:" />
             {services?.map((value, index) => (
               <FormGroup key={index}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedServices.includes(value._id)}
-                      onChange={() => handleServiceChange(value._id)}
-                    />
-                  }
-                  label={value.name}
-                />
+                <FormControlLabel control={<Checkbox />} label={value.name} />
               </FormGroup>
             ))}
           </Box>
+          {/* <Box gap={2}>
+            <Text variant="h6" text="Choose services:" />
+            <FormGroup>
+              <FormControlLabel control={<Checkbox />} label="service 1" />
+              <FormControlLabel control={<Checkbox />} label="service 2" />
+              <FormControlLabel control={<Checkbox />} label="service 3" />
+            </FormGroup>
+          </Box> */}
 
           <Box gap={2}>
             <Text variant="h6" text="Select category:" />
             <FormControl component="fieldset">
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue={formData.category._id}
                 name="radio-buttons-group"
               >
                 {categories?.map((value, index) => (
                   <FormControlLabel
                     key={index}
                     value={value._id}
-                    control={
-                      <Radio
-                        checked={selectedCategory === value._id}
-                        onChange={() => handleCategoryChange(value._id)}
-                      />
-                    }
+                    control={<Radio />}
                     label={value.name}
                   />
                 ))}
@@ -314,17 +296,27 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
+            <Text variant="h6" text="Image:" />
+            {formData.image && <Text variant="body2" text={formData.image} />}
+          </Box>
+
+          <Box sx={style.form} gap={2}>
             <Text variant="h6" text="Upload images:" />
-            <input multiple type="file" accept="image/*" />
+            <input
+              multiple
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
           </Box>
         </Grid>
       </Grid>
 
-      <Button variant="contained" sx={style.addBtn} onClick={handleAddTrip}>
-        <Text variant="body2" text="Add Trip" />
+      <Button variant="contained" sx={style.addBtn} onClick={handleEditTrip}>
+        <Text variant="body2" text="Edit Trip" />
       </Button>
     </Layout>
   );
 };
 
-export default AddTrip;
+export default EditTrip;

@@ -50,12 +50,6 @@ const style = {
     display: "flex",
     alignItems: "center",
   },
-  label: {
-    "& label": {
-      fontSize: 13,
-      marginTop: "2px",
-    },
-  },
   addBtn: {
     marginTop: 6,
     width: "20%",
