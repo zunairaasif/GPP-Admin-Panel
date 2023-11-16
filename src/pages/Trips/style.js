@@ -15,6 +15,16 @@ const style = {
   flex: {
     display: "flex",
   },
+  label: {
+    "& label": {
+      fontSize: 13,
+      marginTop: "2px",
+    },
+  },
+  desc: {
+    display: "flex",
+    flexDirection: "column",
+  },
 
   //************ index ************
 
@@ -78,17 +88,17 @@ const style = {
     display: "flex",
     flexDirection: "column",
   },
-  label: {
-    "& label": {
-      fontSize: 13,
-      marginTop: "2px",
-    },
-  },
   addBtn: {
     marginTop: 4,
     textTransform: "none",
-    width: "20%",
+    minWidth: "20%",
     alignSelf: "center",
+  },
+
+  //************ Edit Trip *************
+
+  dates: {
+    maxWidth: "50%",
   },
 };
 

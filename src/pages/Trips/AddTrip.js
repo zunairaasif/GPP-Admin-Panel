@@ -110,8 +110,8 @@ const AddTrip = () => {
 
     const postData = {
       ...formData,
-      services: selectedServices, // Add the selected services array
-      category: selectedCategory, // Add the selected category string
+      services: selectedServices,
+      category: selectedCategory,
     };
 
     axios
@@ -150,7 +150,7 @@ const AddTrip = () => {
       <Text variant="h3" text="Add a new trip" sx={style.heading} />
 
       <Grid container gap={8} sx={style.flex}>
-        <Grid sx={style.formContainer} gap={4}>
+        <Grid container item md={4} sx={style.formContainer} gap={4}>
           <Box sx={style.form} gap={2}>
             <Text variant="h6" text="Enter Name" />
             <TextField
@@ -161,37 +161,43 @@ const AddTrip = () => {
             />
           </Box>
 
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter description" />
+          <Box sx={style.desc} gap={1}>
+            <Text variant="h6" text="Enter description:" />
             <TextField
               rows={3}
               multiline
               variant="outlined"
-              sx={{ width: "60%" }}
+              sx={{ width: "100%" }}
               value={formData.description}
               onChange={handleInputChange("description")}
             />
           </Box>
 
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker"]}>
-              <DatePicker
-                label="Select start date"
-                value={formData.startDate}
-                onChange={handleDateChange("startDate")}
-              />
-            </DemoContainer>
-          </LocalizationProvider>
+          <Box sx={style.desc}>
+            <Text variant="h6" text="Select start date:" />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <DatePicker
+                  label="Start date"
+                  value={formData.startDate}
+                  onChange={handleDateChange("startDate")}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
+          </Box>
 
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={["DatePicker"]}>
-              <DatePicker
-                label="Select end date"
-                value={formData.endDate}
-                onChange={handleDateChange("endDate")}
-              />
-            </DemoContainer>
-          </LocalizationProvider>
+          <Box sx={style.desc}>
+            <Text variant="h6" text="Select end date:" />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DemoContainer components={["DatePicker"]}>
+                <DatePicker
+                  label="End date"
+                  value={formData.endDate}
+                  onChange={handleDateChange("endDate")}
+                />
+              </DemoContainer>
+            </LocalizationProvider>
+          </Box>
 
           <Box gap={2}>
             <Text variant="h6" text="Choose services:" />
@@ -242,7 +248,6 @@ const AddTrip = () => {
               size="small"
               sx={style.label}
               value={formData.price}
-              style={{ width: "30%" }}
               onChange={handleInputChange("price")}
             />
           </Box>
@@ -253,7 +258,6 @@ const AddTrip = () => {
               size="small"
               sx={style.label}
               value={formData.days}
-              style={{ width: "20%" }}
               onChange={handleInputChange("days")}
             />
           </Box>
@@ -264,7 +268,6 @@ const AddTrip = () => {
               size="small"
               sx={style.label}
               value={formData.totalSeats}
-              style={{ width: "20%" }}
               onChange={handleInputChange("totalSeats")}
             />
           </Box>
@@ -274,7 +277,6 @@ const AddTrip = () => {
             <TextField
               size="small"
               sx={style.label}
-              style={{ width: "30%" }}
               value={formData.seatOfChoicePrice}
               onChange={handleInputChange("seatOfChoicePrice")}
             />
@@ -285,7 +287,6 @@ const AddTrip = () => {
             <TextField
               size="small"
               sx={style.label}
-              style={{ width: "20%" }}
               value={formData.loyaltyPoints}
               onChange={handleInputChange("loyaltyPoints")}
             />
@@ -296,7 +297,6 @@ const AddTrip = () => {
             <TextField
               size="small"
               sx={style.label}
-              style={{ width: "20%" }}
               value={formData.status}
               onChange={handleInputChange("status")}
             />
@@ -307,7 +307,6 @@ const AddTrip = () => {
             <TextField
               size="small"
               sx={style.label}
-              style={{ width: "30%" }}
               value={formData.bookingAmount}
               onChange={handleInputChange("bookingAmount")}
             />

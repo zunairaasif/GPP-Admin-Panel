@@ -4,19 +4,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";
 import Trips from "./pages/Trips";
+import Users from "./pages/Users";
 import PrivateRoutes from "./routes";
+import Bookings from "./pages/Bookings";
 import Services from "./pages/Services";
-import Lotteries from "./pages/Lotteries";
+import LuckyDraw from "./pages/LuckyDraw";
 import Categories from "./pages/Categories";
 import { theme } from "../src/styles/Theme";
 import AddTrip from "./pages/Trips/AddTrip";
 import EditTrip from "./pages/Trips/EditTrip";
 import ViewDetails from "./pages/Trips/TripDetails";
+import AddBooking from "./pages/Bookings/AddBooking";
 import AddService from "./pages/Services/AddService";
-import AddLottery from "./pages/Lotteries/AddLottery";
-import EditLottery from "./pages/Lotteries/EditLottery";
 import EditService from "./pages/Services/EditServices";
 import AddCategory from "./pages/Categories/AddCategory";
+import AddLuckyDraw from "./pages/LuckyDraw/AddLuckyDraw";
 import EditCategory from "./pages/Categories/EditCategory";
 
 function App() {
@@ -39,9 +41,11 @@ function App() {
               path="/edit-category/:categoryId"
               element={<EditCategory />}
             />
-            <Route path="/lotteries" element={<Lotteries />} />
-            <Route path="/new-lottery" element={<AddLottery />} />
-            <Route path="/edit-lottery/:lotteryId" element={<EditLottery />} />
+            <Route path="/bookings" element={<Bookings />} />
+            <Route path="/new-booking" element={<AddBooking />} />
+            <Route path="/lucky-draws" element={<LuckyDraw />} />
+            <Route path="/new-lucky-draw" element={<AddLuckyDraw />} />
+            <Route path="/users" element={<Users />} />
           </Route>
         </Routes>
       </Router>

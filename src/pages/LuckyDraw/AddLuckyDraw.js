@@ -13,7 +13,7 @@ import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
 
-const AddLottery = () => {
+const AddLuckyDrawy = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
@@ -34,7 +34,7 @@ const AddLottery = () => {
     setFormData({ ...formData, [field]: date });
   };
 
-  const handleAddLottery = () => {
+  const handleAddLuckyDraw = () => {
     setLoading(true);
     const token = localStorage.getItem("token");
 
@@ -49,9 +49,9 @@ const AddLottery = () => {
       })
       .then((response) => {
         if (response.data.success) {
-          console.log("Lottery API:", response.data);
+          console.log("Lucky draw API:", response.data);
           setLoading(false);
-          navigate("/lotteries");
+          navigate("/lucky-draws");
         } else {
           console.error("Error:", response.data.error);
           setLoading(false);
@@ -73,10 +73,10 @@ const AddLottery = () => {
         open={openSnackbar}
         onClose={() => setOpenSnackbar(false)}
         severity="error"
-        text="Error adding a new lottery!"
+        text="Error adding a new lucky draw!"
       />
 
-      <Text variant="h3" text="Add a new lottery" sx={style.heading} />
+      <Text variant="h3" text="Add a new lucky draw" sx={style.heading} />
 
       <Grid container gap={8} sx={style.flex}>
         <Grid sx={style.formContainer} gap={4}>
@@ -91,7 +91,7 @@ const AddLottery = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="End time:" />
+            <Text variant="h6" text="End time" />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
@@ -128,11 +128,15 @@ const AddLottery = () => {
         </Grid>
       </Grid>
 
-      <Button variant="contained" sx={style.addBtn} onClick={handleAddLottery}>
-        <Text variant="body2" text="Add lottery" />
+      <Button
+        variant="contained"
+        sx={style.addBtn}
+        onClick={handleAddLuckyDraw}
+      >
+        <Text variant="body2" text="Add lucky draw" />
       </Button>
     </Layout>
   );
 };
 
-export default AddLottery;
+export default AddLuckyDrawy;

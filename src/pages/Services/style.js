@@ -55,8 +55,8 @@ const style = {
     },
   },
   addBtn: {
-    marginTop: 6,
-    width: "20%",
+    marginTop: 2,
+    minWidth: "20%",
     textTransform: "none",
     alignSelf: "flex-start",
   },

@@ -46,7 +46,7 @@ const style = {
     },
   },
   addBtn: {
-    width: "20%",
+    minWidth: "20%",
     textTransform: "none",
   },
 };

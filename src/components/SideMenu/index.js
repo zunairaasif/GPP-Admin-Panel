@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import FlightIcon from "@mui/icons-material/Flight";
 import LogoutIcon from "@mui/icons-material/Logout";
+import PeopleIcon from "@mui/icons-material/People";
 import { Link, useLocation } from "react-router-dom";
 import CategoryIcon from "@mui/icons-material/Category";
+// import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 
@@ -77,18 +79,46 @@ const SideMenu = () => {
           </Grid>
         </Link>
 
-        <Link style={style.link} to="/lotteries">
+        {/* <Link style={style.link} to="/bookings">
           <Grid
             sx={
-              activeLink === "/lotteries" ||
-              activeLink === "/new-lottery" ||
-              (activeLink && activeLink.startsWith("/edit-lottery/"))
+              activeLink === "/bookings" ||
+              activeLink === "/new-booking" ||
+              (activeLink && activeLink.startsWith("/edit-booking"))
+                ? style.menuItemSelected
+                : style.menuItem
+            }
+          >
+            <BookOnlineIcon fontSize="small" sx={style.icon} />
+            <Text variant="body2" text="Bookings" />
+          </Grid>
+        </Link> */}
+
+        <Link style={style.link} to="/lucky-draws">
+          <Grid
+            sx={
+              activeLink === "/lucky-draws" || activeLink === "/new-lucky-draw"
                 ? style.menuItemSelected
                 : style.menuItem
             }
           >
             <ConfirmationNumberIcon fontSize="small" sx={style.icon} />
-            <Text variant="body2" text="Lotteries" />
+            <Text variant="body2" text="Lucky Draws" />
+          </Grid>
+        </Link>
+
+        <Link style={style.link} to="/users">
+          <Grid
+            sx={
+              activeLink === "/users" ||
+              activeLink === "/new-user" ||
+              (activeLink && activeLink.startsWith("/edit-user"))
+                ? style.menuItemSelected
+                : style.menuItem
+            }
+          >
+            <PeopleIcon fontSize="small" sx={style.icon} />
+            <Text variant="body2" text="Users" />
           </Grid>
         </Link>
 

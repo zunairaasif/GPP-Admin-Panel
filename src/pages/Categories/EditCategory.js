@@ -18,7 +18,6 @@ const EditCategory = () => {
 
   const initialCategoryData = state?.categoryDetails;
   const [formData, setFormData] = useState({
-    id: initialCategoryData._id,
     name: initialCategoryData.name,
   });
 

@@ -1,16 +1,14 @@
 import {
   Box,
   Grid,
-  Radio,
   Button,
   Checkbox,
   TextField,
   FormGroup,
-  RadioGroup,
-  FormControl,
   FormControlLabel,
 } from "@mui/material";
 import axios from "axios";
+import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -30,26 +28,27 @@ const EditTrip = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  const [categories, setCategories] = useState([]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const initialTripData = state?.tripDetails;
+
+  const formattedStartDate = initialTripData.startDate
+    ? dayjs(initialTripData.startDate)
+    : null;
+  const formattedEndDate = initialTripData.endDate
+    ? dayjs(initialTripData.endDate)
+    : null;
+
   const [formData, setFormData] = useState({
     id: initialTripData._id,
     name: initialTripData.name,
     description: initialTripData.description,
     price: initialTripData.price,
     days: initialTripData.days,
-    startDate: null,
-    endDate: null,
+    startDate: formattedStartDate,
+    endDate: formattedEndDate,
     status: initialTripData.status,
     services: initialTripData.services,
-    image: initialTripData.image,
-    category: initialTripData.category,
-    bookingAmount: initialTripData.bookingAmount,
-    seatOfChoicePrice: initialTripData.seatOfChoicePrice,
-    totalSeats: initialTripData.totalSeats,
-    loyaltyPoints: initialTripData.loyaltyPoints,
   });
 
   useEffect(() => {
@@ -59,18 +58,7 @@ const EditTrip = () => {
       .then((response) => {
         const service = response.data.services;
         setServices(service);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setLoading(false);
-      });
 
-    axios
-      .get(`${baseUrl}/categories/category`)
-      .then((response) => {
-        const category = response.data.categories;
-        setCategories(category);
         setLoading(false);
       })
       .catch((error) => {
@@ -78,6 +66,28 @@ const EditTrip = () => {
         setLoading(false);
       });
   }, [baseUrl]);
+
+  const [selectedServices, setSelectedServices] = useState(
+    initialTripData.services.map((service) => service._id) || []
+  );
+
+  const handleServiceChange = (serviceId) => {
+    setSelectedServices((prevSelectedServices) => {
+      const isSelected = prevSelectedServices.includes(serviceId);
+
+      if (isSelected) {
+        // If serviceId is already in the list, remove it
+        const updatedServices = prevSelectedServices.filter(
+          (id) => id !== serviceId
+        );
+        return updatedServices;
+      } else {
+        // If serviceId is not in the list, add it
+        const updatedServices = [...prevSelectedServices, serviceId];
+        return updatedServices;
+      }
+    });
+  };
 
   const handleDateChange = (field) => (date) => {
     setFormData({ ...formData, [field]: date });
@@ -87,29 +97,28 @@ const EditTrip = () => {
     setFormData({ ...formData, [field]: event.target.value });
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setFormData({ ...formData, icon: file });
-  };
-
   const handleEditTrip = () => {
     setLoading(true);
     const token = localStorage.getItem("token");
 
     const headers = {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
 
+    const updatedFormData = {
+      ...formData,
+      services: selectedServices,
+    };
+
     axios
-      .put(`${baseUrl}/trips/trip`, formData, {
+      .put(`${baseUrl}/trips/trip`, updatedFormData, {
         headers: headers,
       })
       .then((response) => {
         const data = response.data;
 
         if (data.success) {
-          console.log("Trip api:", data.message);
           setLoading(false);
           navigate("/trips");
           setOpenSnackbar(true);
@@ -136,24 +145,96 @@ const EditTrip = () => {
       <Text variant="h3" text="Edit trip" sx={style.heading} />
 
       <Grid container gap={8} sx={style.flex}>
-        <Grid sx={style.formContainer} gap={4}>
+        <Grid
+          container
+          item
+          md={4}
+          sm={12}
+          xs={12}
+          gap={4}
+          sx={style.formContainer}
+        >
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter Name" />
+            <Text variant="h6" text="Name:" />
             <TextField
               size="small"
               sx={style.label}
+              variant="standard"
               value={formData.name}
               onChange={handleInputChange("name")}
             />
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter description" />
+            <Text variant="h6" text="Price:" />
+            <TextField
+              size="small"
+              sx={style.label}
+              variant="standard"
+              value={formData.price}
+              onChange={handleInputChange("price")}
+            />
+          </Box>
+
+          <Box sx={style.form} gap={2}>
+            <Text variant="h6" text="Days:" />
+            <TextField
+              size="small"
+              sx={style.label}
+              variant="standard"
+              value={formData.days}
+              onChange={handleInputChange("days")}
+            />
+          </Box>
+
+          <Box sx={style.form} gap={2}>
+            <Text variant="h6" text="Status:" />
+            <TextField
+              size="small"
+              sx={style.label}
+              variant="standard"
+              value={formData.status}
+              onChange={handleInputChange("status")}
+            />
+          </Box>
+
+          <Box gap={2}>
+            <Text variant="h6" text="Choose services:" />
+            {services?.map((value) => (
+              <FormGroup key={value._id}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={selectedServices?.some(
+                        (service) => service === value._id
+                      )}
+                      onChange={() => handleServiceChange(value._id)}
+                      inputProps={{ "aria-label": "controlled" }}
+                    />
+                  }
+                  label={value.name}
+                />
+              </FormGroup>
+            ))}
+          </Box>
+        </Grid>
+
+        <Grid
+          item
+          md={7}
+          sm={12}
+          xs={12}
+          gap={4}
+          container
+          sx={style.formContainer}
+        >
+          <Box sx={style.desc} gap={1}>
+            <Text variant="h6" text="Description:" />
             <TextField
               rows={3}
               multiline
               variant="outlined"
-              sx={{ width: "60%" }}
+              sx={{ width: "80%" }}
               value={formData.description}
               onChange={handleInputChange("description")}
             />
@@ -162,6 +243,7 @@ const EditTrip = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker"]}>
               <DatePicker
+                sx={style.dates}
                 label="Select start date"
                 value={formData.startDate}
                 onChange={handleDateChange("startDate")}
@@ -172,143 +254,13 @@ const EditTrip = () => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker"]}>
               <DatePicker
+                sx={style.dates}
                 label="Select end date"
                 value={formData.endDate}
                 onChange={handleDateChange("endDate")}
               />
             </DemoContainer>
           </LocalizationProvider>
-
-          <Box gap={2}>
-            <Text variant="h6" text="Choose services:" />
-            {services?.map((value, index) => (
-              <FormGroup key={index}>
-                <FormControlLabel control={<Checkbox />} label={value.name} />
-              </FormGroup>
-            ))}
-          </Box>
-          {/* <Box gap={2}>
-            <Text variant="h6" text="Choose services:" />
-            <FormGroup>
-              <FormControlLabel control={<Checkbox />} label="service 1" />
-              <FormControlLabel control={<Checkbox />} label="service 2" />
-              <FormControlLabel control={<Checkbox />} label="service 3" />
-            </FormGroup>
-          </Box> */}
-
-          <Box gap={2}>
-            <Text variant="h6" text="Select category:" />
-            <FormControl component="fieldset">
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue={formData.category._id}
-                name="radio-buttons-group"
-              >
-                {categories?.map((value, index) => (
-                  <FormControlLabel
-                    key={index}
-                    value={value._id}
-                    control={<Radio />}
-                    label={value.name}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </Box>
-        </Grid>
-
-        <Grid sx={style.formContainer} gap={4}>
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter price" />
-            <TextField
-              size="small"
-              sx={style.label}
-              value={formData.price}
-              style={{ width: "30%" }}
-              onChange={handleInputChange("price")}
-            />
-          </Box>
-
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter days" />
-            <TextField
-              size="small"
-              sx={style.label}
-              value={formData.days}
-              style={{ width: "20%" }}
-              onChange={handleInputChange("days")}
-            />
-          </Box>
-
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter total seats" />
-            <TextField
-              size="small"
-              sx={style.label}
-              value={formData.totalSeats}
-              style={{ width: "20%" }}
-              onChange={handleInputChange("totalSeats")}
-            />
-          </Box>
-
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter seat of choice price" />
-            <TextField
-              size="small"
-              sx={style.label}
-              style={{ width: "30%" }}
-              value={formData.seatOfChoicePrice}
-              onChange={handleInputChange("seatOfChoicePrice")}
-            />
-          </Box>
-
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter loyalty points" />
-            <TextField
-              size="small"
-              sx={style.label}
-              style={{ width: "20%" }}
-              value={formData.loyaltyPoints}
-              onChange={handleInputChange("loyaltyPoints")}
-            />
-          </Box>
-
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter status" />
-            <TextField
-              size="small"
-              sx={style.label}
-              style={{ width: "20%" }}
-              value={formData.status}
-              onChange={handleInputChange("status")}
-            />
-          </Box>
-
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter booking amount" />
-            <TextField
-              size="small"
-              sx={style.label}
-              style={{ width: "30%" }}
-              value={formData.bookingAmount}
-              onChange={handleInputChange("bookingAmount")}
-            />
-          </Box>
-
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Image:" />
-            {formData.image && <Text variant="body2" text={formData.image} />}
-          </Box>
-
-          <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Upload images:" />
-            <input
-              multiple
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-            />
-          </Box>
         </Grid>
       </Grid>
 

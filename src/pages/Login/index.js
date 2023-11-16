@@ -1,57 +1,3 @@
-// import axios from "axios";
-// import React, { useState } from "react";
-// import { Grid, TextField, Button } from "@mui/material";
-
-// import Text from "../../components/Text";
-
-// const Login = () => {
-//   const [data, setData] = useState("");
-//   const [password, setPassword] = useState("");
-
-//   const baseUrl = process.env.REACT_APP_BASE_URL;
-
-//   const handleLogin = () => {
-//     const formData = {
-//       phoneNumber: data,
-//       password: password,
-//     };
-
-//     axios
-//       .post(`${baseUrl}/auth/loginPhone`, formData)
-//       .then((response) => {
-//         if (response.data.success) {
-//           console.log("Login successfully", response.data);
-//           localStorage.setItem("token", response.data.token);
-//         } else {
-//           console.error("Error:", response.data.message);
-//         }
-//       })
-//       .catch((error) => {
-//         console.error("Error:", error);
-//       });
-//   };
-
-//   return (
-//     <Grid>
-//       <TextField
-//         label="Email/Phone number"
-//         value={data}
-//         onChange={(e) => setData(e.target.value)}
-//       />
-//       <TextField
-//         label="Password"
-//         value={password}
-//         onChange={(e) => setPassword(e.target.value)}
-//       />
-//       <Button variant="contained" onClick={handleLogin}>
-//         <Text variant="body2" text="Login" />
-//       </Button>
-//     </Grid>
-//   );
-// };
-
-// export default Login;
-
 import {
   Box,
   Grid,
@@ -81,14 +27,15 @@ const Login = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const validationSchema = Yup.object().shape({
-    // email: Yup.string().email("Invalid email address").required("Required"),
-    phoneNumber: Yup.string(),
+    phoneNumber: Yup.string()
+      .matches(/^(\+92)?\d{10}$|^\d{11}$/, "Invalid phone number")
+      .required("Required"),
     password: Yup.string().required("Required").min(6),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     axios
-      .post(`${baseUrl}/auth/loginPhone`, values)
+      .post(`${baseUrl}/auth/adminLogin`, values)
       .then((response) => {
         if (response.data.success) {
           localStorage.setItem("token", response.data.token);
@@ -120,7 +67,7 @@ const Login = () => {
         onClose={() => setOpenSnackbar(false)}
       >
         <Alert sx={style.alert} severity="error">
-          <Text variant="subtitl1" text="Invalid email or password!" />
+          <Text variant="subtitl1" text="Invalid phone number or password!" />
         </Alert>
       </Snackbar>
 
@@ -138,9 +85,8 @@ const Login = () => {
                   <Box>
                     <Field
                       as={TextField}
-                      // type="email"
                       name="phoneNumber"
-                      label="Email"
+                      label="Phone number"
                       variant="outlined"
                       fullWidth
                     />

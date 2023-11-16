@@ -18,9 +18,8 @@ const EditService = () => {
 
   const initialServiceData = state?.serviceDetails;
   const [formData, setFormData] = useState({
-    id: initialServiceData._id,
     name: initialServiceData.name,
-    icon: initialServiceData.icon,
+    image: initialServiceData.icon,
   });
 
   const handleInputChange = (field) => (event) => {
@@ -29,7 +28,7 @@ const EditService = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
-    setFormData({ ...formData, icon: file });
+    setFormData({ ...formData, image: file });
   };
 
   const handleEditService = () => {
@@ -37,11 +36,10 @@ const EditService = () => {
     const token = localStorage.getItem("token");
 
     const formDataForApi = new FormData();
-    formDataForApi.append("id", formData.id);
     formDataForApi.append("name", formData.name);
 
-    if (formData.icon instanceof File) {
-      formDataForApi.append("icon", formData.icon);
+    if (formData.image instanceof File) {
+      formDataForApi.append("image", formData.image);
     }
 
     const headers = {
@@ -84,7 +82,7 @@ const EditService = () => {
 
       <Text variant="h3" text="Edit service" sx={style.heading} />
 
-      <Grid container gap={10} sx={style.flex}>
+      <Grid container gap={5} sx={style.flex}>
         <Box sx={style.form} gap={2}>
           <Text variant="h6" text="Name:" />
           <TextField
@@ -97,15 +95,15 @@ const EditService = () => {
         </Box>
 
         <Box sx={style.form} gap={2}>
-          <Text variant="h6" text="Change icon:" />
+          <Text variant="h6" text="Change image:" />
           <input type="file" accept="image/*" onChange={handleFileChange} />
         </Box>
       </Grid>
 
-      <Box sx={style.form} gap={2}>
-        <Text variant="h6" text="Uploaded icon:" />
-        {formData.icon && <Text variant="body2" text={formData.icon} />}
-      </Box>
+      {/* <Box sx={style.form} gap={2}>
+        <Text variant="h6" text="Uploaded image:" />
+        {formData.image && <Text variant="body2" text={formData.image} />}
+      </Box> */}
 
       <Button variant="contained" sx={style.addBtn} onClick={handleEditService}>
         <Text variant="body2" text="Edit service" />

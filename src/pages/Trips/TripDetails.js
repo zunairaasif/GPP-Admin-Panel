@@ -28,7 +28,7 @@ const ViewDetails = () => {
 
   const initialTripData = state?.tripDetails;
   const [formData] = useState({
-    id: initialTripData._id,
+    _id: initialTripData._id,
     name: initialTripData.name,
     description: initialTripData.description,
     price: initialTripData.price,
@@ -68,7 +68,7 @@ const ViewDetails = () => {
     };
 
     try {
-      await axios.delete(`${baseUrl}/trips/trip/${formData.id}`, {
+      await axios.delete(`${baseUrl}/trips/trip/${formData._id}`, {
         headers,
       });
 

@@ -52,7 +52,7 @@ const style = {
   },
   addBtn: {
     marginTop: 6,
-    width: "20%",
+    minWidth: "20%",
     textTransform: "none",
     alignSelf: "flex-start",
   },
