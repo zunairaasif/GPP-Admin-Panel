@@ -41,7 +41,7 @@ const Trips = () => {
   };
 
   const handleViewDetails = (tripId, tripDetails) => {
-    navigate(`/view-details/${tripId}`, { state: { tripDetails } });
+    navigate(`/view-trip-details/${tripId}`, { state: { tripDetails } });
   };
 
   const handleEditTrip = (tripId, tripDetails) => {
@@ -115,7 +115,7 @@ const Trips = () => {
       />
 
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all trips" sx={style.heading} />
+        <Text variant="h3" text="List of all trips" />
         <Button variant="contained" onClick={handleNewTrip} sx={style.button}>
           <Text variant="body2" text="Add new trip" />
         </Button>

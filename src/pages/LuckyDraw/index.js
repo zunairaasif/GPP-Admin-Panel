@@ -7,12 +7,14 @@ import style from "./style";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
+import AlertMessage from "../../components/Alert";
 
 const LuckyDraw = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [luckyDraws, setLuckyDraws] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -21,7 +23,6 @@ const LuckyDraw = () => {
       .then((response) => {
         const luckyDraw = response.data.lotteries;
         setLuckyDraws(luckyDraw);
-        console.log(luckyDraw);
         setLoading(false);
       })
       .catch((error) => {
@@ -34,12 +35,57 @@ const LuckyDraw = () => {
     navigate("/new-lucky-draw");
   };
 
+  const handleViewDetails = (luckyDrawId, luckyDrawDetails) => {
+    navigate(`/view-lucky-draw/${luckyDrawId}`, {
+      state: { luckyDrawDetails },
+    });
+  };
+
+  const handleAnnounceWinner = (luckyDrawId) => {
+    setLoading(true);
+
+    const token = localStorage.getItem("token");
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const postData = {
+      lotteryId: luckyDrawId,
+    };
+
+    axios
+      .post(`${baseUrl}/lottery/announceWinner`, postData, {
+        headers: headers,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          console.log("Announce winner API:", response.data.message);
+          setLoading(false);
+          setOpenSnackbar(true);
+        } else {
+          console.error("Error:", response.data.error);
+          setLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error", error);
+        setLoading(false);
+      });
+  };
+
   return (
     <Layout>
       <Loader open={loading} />
 
+      <AlertMessage
+        open={openSnackbar}
+        onClose={() => setOpenSnackbar(false)}
+        severity="success"
+        text="Winner has been announced!"
+      />
+
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all Lucky draws" sx={style.heading} />
+        <Text variant="h3" text="List of all Lucky draws" />
         <Button
           variant="contained"
           onClick={handleNewLuckyDraw}
@@ -70,7 +116,7 @@ const LuckyDraw = () => {
               <Text variant="h5" text="Winner selected:" />
               <Text
                 variant="body1"
-                text={value.winnerSelected ? "true" : "false"}
+                text={value.winnerSelected === true ? "true" : "false"}
               />
             </Box>
 
@@ -79,9 +125,26 @@ const LuckyDraw = () => {
               <Text variant="body1" text={value.endTime} />
             </Box>
 
-            <Button variant="outlined">
-              <Text variant="body1" text="View Details" />
-            </Button>
+            <Grid
+              container
+              sx={{ display: "flex", justifyContent: "space-between" }}
+            >
+              <Button
+                sx={style.buttons}
+                variant="outlined"
+                onClick={() => handleViewDetails(value._id, value)}
+              >
+                <Text variant="body1" text="View Details" />
+              </Button>
+
+              <Button
+                sx={style.buttons}
+                variant="outlined"
+                onClick={() => handleAnnounceWinner(value._id)}
+              >
+                <Text variant="body1" text="Announce Winner" />
+              </Button>
+            </Grid>
           </Grid>
         ))}
       </Grid>

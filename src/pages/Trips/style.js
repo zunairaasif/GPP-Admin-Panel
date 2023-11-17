@@ -29,7 +29,9 @@ const style = {
   //************ index ************
 
   container: {
+    marginBottom: 5,
     display: "flex",
+    alignItems: "center",
     justifyContent: "space-between",
   },
   block: {

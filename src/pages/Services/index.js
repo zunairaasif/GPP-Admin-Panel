@@ -112,7 +112,7 @@ const Services = () => {
       />
 
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all services" sx={style.heading} />
+        <Text variant="h3" text="List of all services" />
         <Button
           variant="contained"
           onClick={handleNewService}

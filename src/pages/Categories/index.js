@@ -112,7 +112,7 @@ const Categories = () => {
       />
 
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all categories" sx={style.heading} />
+        <Text variant="h3" text="List of all categories" />
         <Button
           variant="contained"
           onClick={handleNewCategory}

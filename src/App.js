@@ -13,13 +13,14 @@ import Categories from "./pages/Categories";
 import { theme } from "../src/styles/Theme";
 import AddTrip from "./pages/Trips/AddTrip";
 import EditTrip from "./pages/Trips/EditTrip";
-import ViewDetails from "./pages/Trips/TripDetails";
+import TripDetails from "./pages/Trips/TripDetails";
 import AddBooking from "./pages/Bookings/AddBooking";
 import AddService from "./pages/Services/AddService";
 import EditService from "./pages/Services/EditServices";
 import AddCategory from "./pages/Categories/AddCategory";
 import AddLuckyDraw from "./pages/LuckyDraw/AddLuckyDraw";
 import EditCategory from "./pages/Categories/EditCategory";
+import LuckyDrawDetails from "./pages/LuckyDraw/LuckyDrawDetails";
 
 function App() {
   return (
@@ -29,7 +30,10 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/trips" element={<Trips />} />
-            <Route path="/view-details/:tripId" element={<ViewDetails />} />
+            <Route
+              path="/view-trip-details/:tripId"
+              element={<TripDetails />}
+            />
             <Route path="/new-trip" element={<AddTrip />} />
             <Route path="/edit-trip/:tripId" element={<EditTrip />} />
             <Route path="/services" element={<Services />} />
@@ -44,6 +48,10 @@ function App() {
             <Route path="/bookings" element={<Bookings />} />
             <Route path="/new-booking" element={<AddBooking />} />
             <Route path="/lucky-draws" element={<LuckyDraw />} />
+            <Route
+              path="/view-lucky-draw/:luckyDrawId"
+              element={<LuckyDrawDetails />}
+            />
             <Route path="/new-lucky-draw" element={<AddLuckyDraw />} />
             <Route path="/users" element={<Users />} />
           </Route>

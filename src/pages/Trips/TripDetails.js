@@ -17,7 +17,7 @@ import Loader from "../../components/Loader";
 import Confirm from "../../components/ConfirmMsg";
 import AlertMessage from "../../components/Alert";
 
-const ViewDetails = () => {
+const TripDetails = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [open, setOpen] = useState(false);
@@ -204,4 +204,4 @@ const ViewDetails = () => {
   );
 };
 
-export default ViewDetails;
+export default TripDetails;

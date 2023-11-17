@@ -39,7 +39,7 @@ const SideMenu = () => {
               activeLink === "/trips" ||
               activeLink === "/new-trip" ||
               (activeLink && activeLink.startsWith("/edit-trip/")) ||
-              (activeLink && activeLink.startsWith("/view-details/"))
+              (activeLink && activeLink.startsWith("/view-trip-details/"))
                 ? style.menuItemSelected
                 : style.menuItem
             }
@@ -97,7 +97,9 @@ const SideMenu = () => {
         <Link style={style.link} to="/lucky-draws">
           <Grid
             sx={
-              activeLink === "/lucky-draws" || activeLink === "/new-lucky-draw"
+              activeLink === "/lucky-draws" ||
+              activeLink === "/new-lucky-draw" ||
+              (activeLink && activeLink.startsWith("/view-lucky-draw/"))
                 ? style.menuItemSelected
                 : style.menuItem
             }

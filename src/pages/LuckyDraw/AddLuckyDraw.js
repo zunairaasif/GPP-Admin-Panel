@@ -80,7 +80,7 @@ const AddLuckyDrawy = () => {
 
       <Grid container gap={8} sx={style.flex}>
         <Grid sx={style.formContainer} gap={4}>
-          <Box sx={style.form} gap={2}>
+          <Box sx={style.wrap} gap={2}>
             <Text variant="h6" text="Enter Name" />
             <TextField
               size="small"
@@ -90,7 +90,7 @@ const AddLuckyDrawy = () => {
             />
           </Box>
 
-          <Box sx={style.form} gap={2}>
+          <Box sx={style.wrap} gap={2}>
             <Text variant="h6" text="End time" />
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -106,7 +106,7 @@ const AddLuckyDrawy = () => {
         </Grid>
 
         <Grid sx={style.formContainer} gap={4}>
-          <Box sx={style.form} gap={2}>
+          <Box sx={style.wrap} gap={2}>
             <Text variant="h6" text="Enter join price" />
             <TextField
               size="small"
@@ -116,7 +116,7 @@ const AddLuckyDrawy = () => {
             />
           </Box>
 
-          <Box sx={style.form} gap={2}>
+          <Box sx={style.wrap} gap={2}>
             <Text variant="h6" text="Enter win price" />
             <TextField
               size="small"
