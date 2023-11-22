@@ -9,6 +9,7 @@ import style from "./style";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
+import NoData from "../../components/NoData";
 import Confirm from "../../components/ConfirmMsg";
 import AlertMessage from "../../components/Alert";
 
@@ -122,27 +123,31 @@ const Services = () => {
         </Button>
       </Grid>
 
-      <Grid container gap={5}>
-        {services?.map((value, index) => (
-          <Grid item md={5.75} container gap={1} sx={style.block} key={index}>
-            <Box sx={style.wrap} gap={2}>
-              <img src={value.icon} alt={value.name} width={20} />
-              <Text variant="body1" text={value.name} />
-            </Box>
+      <Grid container gap={3}>
+        {services ? (
+          services.map((value, index) => (
+            <Grid item md={5.75} container gap={1} sx={style.block} key={index}>
+              <Box sx={style.wrap} gap={2}>
+                <img src={value.icon} alt={value.name} width={25} />
+                <Text variant="body1" text={value.name} />
+              </Box>
 
-            <Box sx={style.wrap} gap={2}>
-              <EditIcon
-                sx={style.edit}
-                onClick={() => handleEditService(value._id, value)}
-              />
-              <DeleteIcon
-                sx={style.delete}
-                color="error"
-                onClick={() => handleOpen(value._id)}
-              />
-            </Box>
-          </Grid>
-        ))}
+              <Box sx={style.wrap} gap={2}>
+                <EditIcon
+                  sx={style.edit}
+                  onClick={() => handleEditService(value._id, value)}
+                />
+                <DeleteIcon
+                  sx={style.delete}
+                  color="error"
+                  onClick={() => handleOpen(value._id)}
+                />
+              </Box>
+            </Grid>
+          ))
+        ) : (
+          <NoData text="services" />
+        )}
       </Grid>
     </Layout>
   );

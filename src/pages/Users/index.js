@@ -18,6 +18,7 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import style from "./style";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
+import Loader from "../../components/Loader";
 
 const columns = [
   { id: "profilePic", label: "Profile Picture" },
@@ -33,12 +34,14 @@ const columns = [
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = React.useState(0);
+  const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    setLoading(true);
 
+    const token = localStorage.getItem("token");
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -52,9 +55,11 @@ const Users = () => {
         const user = response.data.users;
         console.log(user);
         setUsers(user);
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error:", error);
+        setLoading(false);
       });
   }, [baseUrl]);
 
@@ -69,6 +74,8 @@ const Users = () => {
 
   return (
     <Layout>
+      <Loader open={loading} />
+
       <Grid container sx={style.container}>
         <Text variant="h3" text="List of all Users" />
 

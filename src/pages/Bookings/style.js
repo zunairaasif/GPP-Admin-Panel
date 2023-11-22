@@ -1,19 +1,21 @@
 const style = {
-  //*********** Common ***********
   heading: {
     marginBottom: 5,
   },
-
-  //************ index ************
-
-  container: {
+  block: {
+    padding: 2,
+    borderRadius: 3,
     display: "flex",
+    backgroundColor: "white",
     justifyContent: "space-between",
   },
-  button: {
-    height: 40,
-    textTransform: "none",
-    backgroundColor: "#8e85f3",
+  grid: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  wrap: {
+    display: "flex",
+    alignItems: "center",
   },
 };
 

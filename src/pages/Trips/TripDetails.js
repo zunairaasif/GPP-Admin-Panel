@@ -37,7 +37,7 @@ const TripDetails = () => {
     endDate: initialTripData.endDate,
     status: initialTripData.status,
     services: initialTripData.services,
-    image: initialTripData.image,
+    images: initialTripData.images,
     category: initialTripData.category,
     bookingAmount: initialTripData.bookingAmount,
     seatOfChoicePrice: initialTripData.seatOfChoicePrice,
@@ -168,7 +168,10 @@ const TripDetails = () => {
 
         <Box sx={style.form} gap={1}>
           <Text variant="h5" text="Status:" />
-          <Text variant="body1" text={formData.status ? "true" : "false"} />
+          <Text
+            variant="body1"
+            text={formData.status ? "Active" : "Inactive"}
+          />
         </Box>
 
         <Box sx={style.form} gap={1}>
@@ -193,12 +196,16 @@ const TripDetails = () => {
           <Text variant="h5" text="End Date:" />
           <Text variant="body1" text={formData.endDate} />
         </Box>
+
+        <Text variant="h5" text="Images:" />
       </Grid>
 
       <ImageList cols={4}>
-        <ImageListItem>
-          <img src={formData.image} alt="images" loading="lazy" />
-        </ImageListItem>
+        {formData.images.map((image, index) => (
+          <ImageListItem key={index}>
+            <img src={image} alt="images" loading="lazy" />
+          </ImageListItem>
+        ))}
       </ImageList>
     </Layout>
   );

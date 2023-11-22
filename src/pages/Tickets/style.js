@@ -1,7 +1,13 @@
 const style = {
   //*********** Common ***********
-  heading: {
-    marginBottom: 5,
+
+  grid: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  wrap: {
+    display: "flex",
+    alignItems: "center",
   },
 
   //************ index ************
@@ -21,37 +27,23 @@ const style = {
     padding: 2,
     borderRadius: 3,
     display: "flex",
-    alignItems: "center",
     backgroundColor: "white",
     justifyContent: "space-between",
   },
-  wrap: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
 
-  //************ Add Category *************
+  //************ Add Tickets ************
 
-  flex: {
-    display: "flex",
-    alignItems: "center",
+  heading: {
+    marginBottom: 5,
   },
-  form: {
+  display: {
     display: "flex",
-    alignItems: "center",
-  },
-  label: {
-    "& label": {
-      fontSize: 13,
-      marginTop: "2px",
-    },
   },
   addBtn: {
-    marginTop: 2,
+    marginTop: 4,
     minWidth: "20%",
+    alignSelf: "center",
     textTransform: "none",
-    alignSelf: "flex-start",
   },
 };
 

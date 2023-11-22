@@ -84,7 +84,6 @@ const AddLuckyDrawy = () => {
             <Text variant="h6" text="Enter Name" />
             <TextField
               size="small"
-              sx={style.label}
               value={formData.name}
               onChange={handleInputChange("name")}
             />
@@ -110,7 +109,6 @@ const AddLuckyDrawy = () => {
             <Text variant="h6" text="Enter join price" />
             <TextField
               size="small"
-              sx={style.label}
               value={formData.joinPrice}
               onChange={handleInputChange("joinPrice")}
             />
@@ -120,7 +118,6 @@ const AddLuckyDrawy = () => {
             <Text variant="h6" text="Enter win price" />
             <TextField
               size="small"
-              sx={style.label}
               value={formData.winPrice}
               onChange={handleInputChange("winPrice")}
             />

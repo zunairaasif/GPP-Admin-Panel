@@ -5,11 +5,14 @@ const style = {
     display: "flex",
     alignItems: "center",
   },
-
   button: {
     height: 40,
     textTransform: "none",
     backgroundColor: "#8e85f3",
+  },
+  buttons: {
+    width: "48%",
+    textTransform: "none",
   },
 
   //************ index ************
@@ -67,10 +70,6 @@ const style = {
   action: {
     display: "flex",
     alignSelf: "flex-end",
-  },
-  buttons: {
-    width: "48%",
-    textTransform: "none",
   },
   width: {
     width: "70%",

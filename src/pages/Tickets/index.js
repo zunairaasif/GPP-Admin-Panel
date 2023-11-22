@@ -1,5 +1,6 @@
 import axios from "axios";
-import { Grid, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Grid, Button, Box } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 import style from "./style";
@@ -8,10 +9,11 @@ import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import NoData from "../../components/NoData";
 
-const Bookings = () => {
+const Tickets = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const baseUrl = process.env.REACT_APP_BASE_URL;
-  const [bookings, setBookings] = useState([]);
+  const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -23,10 +25,10 @@ const Bookings = () => {
     };
 
     axios
-      .get(`${baseUrl}/bookings/booking`, { headers })
+      .get(`${baseUrl}/tickets/ticket`, { headers })
       .then((response) => {
-        const booking = response.data.bookings;
-        setBookings(booking);
+        const ticket = response.data.tickets;
+        setTickets(ticket);
         setLoading(false);
       })
       .catch((error) => {
@@ -35,79 +37,82 @@ const Bookings = () => {
       });
   }, [baseUrl]);
 
+  const handleNewticket = () => {
+    navigate("/new-ticket");
+  };
+
   return (
     <Layout>
       <Loader open={loading} />
 
-      <Text variant="h3" text="List of all bookings" sx={style.heading} />
+      <Grid container sx={style.container}>
+        <Text variant="h3" text="List of all tickets" />
+        <Button variant="contained" onClick={handleNewticket} sx={style.button}>
+          <Text variant="body2" text="Add new ticket" />
+        </Button>
+      </Grid>
 
       <Grid container gap={2}>
-        {bookings ? (
-          bookings.map((booking, index) => (
+        {tickets ? (
+          tickets.map((ticket, index) => (
             <Grid item container md={5.75} key={index} sx={style.block}>
               <Grid container item gap={1} md={5} sx={style.grid}>
                 <Box gap={2} sx={style.wrap}>
                   <Text variant="h5" text="User:" />
-                  <Text
-                    variant="body1"
-                    text={booking.user ? booking.user.name : "null"}
-                  />
-                </Box>
-
-                <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Booking:" />
-                  <Text
-                    variant="body1"
-                    text={booking.booking ? booking.booking.name : "null"}
-                  />
+                  <Text variant="body1" text={ticket.user.name} />
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
                   <Text variant="h5" text="Price:" />
-                  <Text variant="body1" text={booking.price} />
+                  <Text variant="body1" text={ticket.price} />
+                </Box>
+
+                <Box gap={2} sx={style.wrap}>
+                  <Text variant="h5" text="Amount Paid:" />
+                  <Text variant="body1" text={ticket.amountPaid} />
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
                   <Text variant="h5" text="Number of seats:" />
-                  <Text variant="body1" text={booking.noOfSeats} />
+                  <Text variant="body1" text={ticket.noOfSeats} />
                 </Box>
               </Grid>
 
               <Grid container item gap={1} md={6} sx={style.grid}>
                 <Box gap={2} sx={style.wrap}>
                   <Text variant="h5" text="Paid:" />
-                  <Text
-                    variant="body1"
-                    text={booking.paid ? "true" : "false"}
-                  />
+                  <Text variant="body1" text={ticket.paid ? "true" : "false"} />
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Amount Paid:" />
-                  <Text variant="body1" text={booking.amountPaid} />
+                  <Text variant="h5" text="Booking:" />
+                  <Text
+                    variant="body1"
+                    text={ticket.booking ? ticket.booking.name : "null"}
+                  />
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
                   <Text variant="h5" text="Booking Confirmed:" />
                   <Text
                     variant="body1"
-                    text={booking.bookingConfirm ? "true" : "false"}
+                    text={ticket.bookingConfirm ? "true" : "false"}
                   />
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
                   <Text variant="h5" text="Seat of Choice Price:" />
-                  <Text variant="body1" text={booking.seatOfChoicePrice} />
+                  <Text variant="body1" text={ticket.seatOfChoicePrice} />
                 </Box>
               </Grid>
             </Grid>
           ))
         ) : (
-          <NoData text="bookings" />
+          <NoData text="tickets" />
         )}
       </Grid>
     </Layout>
   );
 };
 
-export default Bookings;
+export default Tickets;

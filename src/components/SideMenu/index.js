@@ -4,9 +4,10 @@ import React, { useState, useEffect } from "react";
 import FlightIcon from "@mui/icons-material/Flight";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PeopleIcon from "@mui/icons-material/People";
+import RedeemIcon from "@mui/icons-material/Redeem";
 import { Link, useLocation } from "react-router-dom";
 import CategoryIcon from "@mui/icons-material/Category";
-// import BookOnlineIcon from "@mui/icons-material/BookOnline";
+import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 
@@ -79,11 +80,10 @@ const SideMenu = () => {
           </Grid>
         </Link>
 
-        {/* <Link style={style.link} to="/bookings">
+        <Link style={style.link} to="/bookings">
           <Grid
             sx={
               activeLink === "/bookings" ||
-              activeLink === "/new-booking" ||
               (activeLink && activeLink.startsWith("/edit-booking"))
                 ? style.menuItemSelected
                 : style.menuItem
@@ -92,7 +92,22 @@ const SideMenu = () => {
             <BookOnlineIcon fontSize="small" sx={style.icon} />
             <Text variant="body2" text="Bookings" />
           </Grid>
-        </Link> */}
+        </Link>
+
+        <Link style={style.link} to="/tickets">
+          <Grid
+            sx={
+              activeLink === "/tickets" ||
+              activeLink === "/new-ticket" ||
+              (activeLink && activeLink.startsWith("/edit-ticket"))
+                ? style.menuItemSelected
+                : style.menuItem
+            }
+          >
+            <ConfirmationNumberIcon fontSize="small" sx={style.icon} />
+            <Text variant="body2" text="Tickets" />
+          </Grid>
+        </Link>
 
         <Link style={style.link} to="/lucky-draws">
           <Grid
@@ -104,7 +119,7 @@ const SideMenu = () => {
                 : style.menuItem
             }
           >
-            <ConfirmationNumberIcon fontSize="small" sx={style.icon} />
+            <RedeemIcon fontSize="small" sx={style.icon} />
             <Text variant="body2" text="Lucky Draws" />
           </Grid>
         </Link>

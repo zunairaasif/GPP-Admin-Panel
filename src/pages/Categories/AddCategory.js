@@ -17,7 +17,13 @@ const AddCategory = () => {
 
   const [formData, setFormData] = useState({
     name: "",
+    image: null,
   });
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFormData({ ...formData, image: file });
+  };
 
   const handleInputChange = (field) => (event) => {
     setFormData({ ...formData, [field]: event.target.value });
@@ -28,7 +34,7 @@ const AddCategory = () => {
     const token = localStorage.getItem("token");
 
     const headers = {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     };
 
@@ -78,14 +84,15 @@ const AddCategory = () => {
           />
         </Box>
 
-        <Button
-          variant="contained"
-          sx={style.addBtn}
-          onClick={handleAddCategory}
-        >
-          <Text variant="body2" text="Add category" />
-        </Button>
+        <Box sx={style.form} gap={2}>
+          <Text variant="h6" text="Choose icon:" />
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+        </Box>
       </Grid>
+
+      <Button variant="contained" sx={style.addBtn} onClick={handleAddCategory}>
+        <Text variant="body2" text="Add category" />
+      </Button>
     </Layout>
   );
 };

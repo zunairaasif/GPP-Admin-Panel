@@ -3,9 +3,12 @@ import {
   Grid,
   Radio,
   Button,
+  Select,
+  MenuItem,
   Checkbox,
   TextField,
   FormGroup,
+  InputLabel,
   RadioGroup,
   FormControl,
   FormControlLabel,
@@ -43,8 +46,8 @@ const AddTrip = () => {
     endDate: null,
     status: "",
     services: "",
-    image: "",
-    category: [],
+    image: [],
+    category: "",
     bookingAmount: "",
     seatOfChoicePrice: "",
     totalSeats: "",
@@ -87,16 +90,30 @@ const AddTrip = () => {
   };
 
   const handleServiceChange = (serviceId) => {
-    // Toggle the selected state of the service
-    setSelectedServices((prevSelectedServices) =>
-      prevSelectedServices.includes(serviceId)
-        ? prevSelectedServices.filter((id) => id !== serviceId)
-        : [...prevSelectedServices, serviceId]
-    );
+    setSelectedServices((prevSelectedServices) => {
+      const isSelected = prevSelectedServices.includes(serviceId);
+
+      if (isSelected) {
+        // If serviceId is already in the list, remove it
+        const updatedServices = prevSelectedServices.filter(
+          (id) => id !== serviceId
+        );
+        return updatedServices;
+      } else {
+        // If serviceId is not in the list, add it
+        const updatedServices = [...prevSelectedServices, serviceId];
+        return updatedServices;
+      }
+    });
   };
 
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
+  };
+
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files);
+    setFormData({ ...formData, image: files });
   };
 
   const handleAddTrip = () => {
@@ -108,14 +125,30 @@ const AddTrip = () => {
       Authorization: `Bearer ${token}`,
     };
 
-    const postData = {
-      ...formData,
-      services: selectedServices,
-      category: selectedCategory,
-    };
+    const formDataForApi = new FormData();
+    formDataForApi.append("name", formData.name);
+    formDataForApi.append("description", formData.description);
+    formDataForApi.append("price", formData.price);
+    formDataForApi.append("days", formData.days);
+    formDataForApi.append("startDate", formData.startDate);
+    formDataForApi.append("endDate", formData.endDate);
+    formDataForApi.append("status", formData.status);
+    formDataForApi.append("category", selectedCategory);
+    formDataForApi.append("bookingAmount", formData.bookingAmount);
+    formDataForApi.append("seatOfChoicePrice", formData.seatOfChoicePrice);
+    formDataForApi.append("totalSeats", formData.totalSeats);
+    formDataForApi.append("loyaltyPoints", formData.loyaltyPoints);
+
+    for (const serviceId of selectedServices) {
+      formDataForApi.append("services", serviceId);
+    }
+
+    formData.image.forEach((file) => {
+      formDataForApi.append("image", file);
+    });
 
     axios
-      .post(`${baseUrl}/trips/trip`, postData, {
+      .post(`${baseUrl}/trips/trip`, formDataForApi, {
         headers: headers,
       })
       .then((response) => {
@@ -123,7 +156,6 @@ const AddTrip = () => {
           console.log("Trip added successfully:", response.data);
           setLoading(false);
           navigate("/trips");
-          setOpenSnackbar(true);
         } else {
           console.error("Error:", response.data);
           setLoading(false);
@@ -133,6 +165,7 @@ const AddTrip = () => {
       .catch((error) => {
         console.error("Error posting:", error);
         setLoading(false);
+        setOpenSnackbar(true);
       });
   };
 
@@ -215,30 +248,6 @@ const AddTrip = () => {
               </FormGroup>
             ))}
           </Box>
-
-          <Box gap={2}>
-            <Text variant="h6" text="Select category:" />
-            <FormControl component="fieldset">
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                name="radio-buttons-group"
-              >
-                {categories?.map((value, index) => (
-                  <FormControlLabel
-                    key={index}
-                    value={value._id}
-                    control={
-                      <Radio
-                        checked={selectedCategory === value._id}
-                        onChange={() => handleCategoryChange(value._id)}
-                      />
-                    }
-                    label={value.name}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
-          </Box>
         </Grid>
 
         <Grid sx={style.formContainer} gap={4}>
@@ -293,16 +302,6 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter status" />
-            <TextField
-              size="small"
-              sx={style.label}
-              value={formData.status}
-              onChange={handleInputChange("status")}
-            />
-          </Box>
-
-          <Box sx={style.form} gap={2}>
             <Text variant="h6" text="Enter booking amount" />
             <TextField
               size="small"
@@ -313,8 +312,51 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
+            <Text variant="h6" text="Enter status" />
+            <FormControl sx={{ width: "50%" }}>
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <Select
+                label="Status"
+                value={formData.status}
+                id="demo-simple-select"
+                labelId="demo-simple-select-label"
+                onChange={handleInputChange("status")}
+              >
+                <MenuItem value={true}>Active</MenuItem>
+                <MenuItem value={false}>Inactive</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+
+          <Box sx={style.form} gap={2}>
             <Text variant="h6" text="Upload images:" />
-            <input multiple type="file" accept="image/*" />
+            <input
+              multiple
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+            />
+          </Box>
+
+          <Box gap={2}>
+            <Text variant="h6" text="Select category:" />
+            <FormControl component="fieldset">
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                name="radio-buttons-group"
+              >
+                {categories?.map((value, index) => (
+                  <FormControlLabel
+                    key={index}
+                    value={value._id}
+                    control={
+                      <Radio onChange={() => handleCategoryChange(value._id)} />
+                    }
+                    label={value.name}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
           </Box>
         </Grid>
       </Grid>

@@ -2,9 +2,13 @@ import {
   Box,
   Grid,
   Button,
+  Select,
+  MenuItem,
   Checkbox,
   TextField,
   FormGroup,
+  InputLabel,
+  FormControl,
   FormControlLabel,
 } from "@mui/material";
 import axios from "axios";
@@ -189,13 +193,19 @@ const EditTrip = () => {
 
           <Box sx={style.form} gap={2}>
             <Text variant="h6" text="Status:" />
-            <TextField
-              size="small"
-              sx={style.label}
-              variant="standard"
-              value={formData.status}
-              onChange={handleInputChange("status")}
-            />
+            <FormControl sx={{ width: "50%" }}>
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <Select
+                label="Status"
+                value={formData.status}
+                id="demo-simple-select"
+                labelId="demo-simple-select-label"
+                onChange={handleInputChange("status")}
+              >
+                <MenuItem value={true}>Active</MenuItem>
+                <MenuItem value={false}>Inactive</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
 
           <Box gap={2}>

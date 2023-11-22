@@ -7,6 +7,7 @@ import style from "./style";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
+import NoData from "../../components/NoData";
 import AlertMessage from "../../components/Alert";
 
 const LuckyDraw = () => {
@@ -96,57 +97,50 @@ const LuckyDraw = () => {
       </Grid>
 
       <Grid container gap={5}>
-        {luckyDraws?.map((value, index) => (
-          <Grid item md={4.5} container gap={2} sx={style.block} key={index}>
-            <Text variant="h4" text={value.name} />
+        {luckyDraws ? (
+          luckyDraws.map((value, index) => (
+            <Grid item md={4.5} container gap={2} sx={style.block} key={index}>
+              <Text variant="h4" text={value.name} />
 
-            <Box sx={style.wrapper} gap={1}>
-              <Box sx={style.wrap} gap={1}>
-                <Text variant="h5" text="Join price:" />
-                <Text variant="body1" text={value.joinPrice} />
+              <Box sx={style.wrapper} gap={1}>
+                <Box sx={style.wrap} gap={1}>
+                  <Text variant="h5" text="Join price:" />
+                  <Text variant="body1" text={value.joinPrice} />
+                </Box>
+
+                <Box sx={style.wrap} gap={1}>
+                  <Text variant="h5" text="Win price:" />
+                  <Text variant="body1" text={value.winPrice} />
+                </Box>
               </Box>
 
               <Box sx={style.wrap} gap={1}>
-                <Text variant="h5" text="Win price:" />
-                <Text variant="body1" text={value.winPrice} />
+                <Text variant="h5" text="End time:" />
+                <Text variant="body1" text={value.endTime} />
               </Box>
-            </Box>
 
-            <Box sx={style.wrap} gap={1}>
-              <Text variant="h5" text="Winner selected:" />
-              <Text
-                variant="body1"
-                text={value.winnerSelected === true ? "true" : "false"}
-              />
-            </Box>
+              <Grid container sx={style.wrapper}>
+                <Button
+                  sx={style.buttons}
+                  variant="outlined"
+                  onClick={() => handleViewDetails(value._id, value)}
+                >
+                  <Text variant="body1" text="View Details" />
+                </Button>
 
-            <Box sx={style.wrap} gap={1}>
-              <Text variant="h5" text="End time:" />
-              <Text variant="body1" text={value.endTime} />
-            </Box>
-
-            <Grid
-              container
-              sx={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Button
-                sx={style.buttons}
-                variant="outlined"
-                onClick={() => handleViewDetails(value._id, value)}
-              >
-                <Text variant="body1" text="View Details" />
-              </Button>
-
-              <Button
-                sx={style.buttons}
-                variant="outlined"
-                onClick={() => handleAnnounceWinner(value._id)}
-              >
-                <Text variant="body1" text="Announce Winner" />
-              </Button>
+                <Button
+                  sx={style.buttons}
+                  variant="outlined"
+                  onClick={() => handleAnnounceWinner(value._id)}
+                >
+                  <Text variant="body1" text="Announce Winner" />
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        ))}
+          ))
+        ) : (
+          <NoData text="lucky draws" />
+        )}
       </Grid>
     </Layout>
   );

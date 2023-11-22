@@ -41,6 +41,11 @@ const style = {
     flexDirection: "column",
     backgroundColor: "white",
   },
+  title: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
   btn: {
     textTransform: "none",
   },
@@ -92,9 +97,9 @@ const style = {
   },
   addBtn: {
     marginTop: 4,
-    textTransform: "none",
     minWidth: "20%",
     alignSelf: "center",
+    textTransform: "none",
   },
 
   //************ Edit Trip *************

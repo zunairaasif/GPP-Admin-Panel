@@ -7,6 +7,7 @@ import style from "./style";
 import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
+import NoData from "../../components/NoData";
 import Confirm from "../../components/ConfirmMsg";
 import AlertMessage from "../../components/Alert";
 
@@ -123,35 +124,42 @@ const Categories = () => {
       </Grid>
 
       <Grid container gap={3}>
-        {categories?.map((value) => (
-          <Grid
-            item
-            container
-            gap={3}
-            md={5.75}
-            key={value._id}
-            sx={style.block}
-          >
-            <Text variant="body1" text={value.name} />
+        {categories ? (
+          categories.map((value) => (
+            <Grid
+              item
+              container
+              gap={3}
+              md={5.75}
+              key={value._id}
+              sx={style.block}
+            >
+              <Box sx={style.wrap} gap={2}>
+                <img src={value.image} alt={value.name} width={25} />
+                <Text variant="body1" text={value.name} />
+              </Box>
 
-            <Box sx={style.wrap} gap={1}>
-              <Button
-                variant="outlined"
-                onClick={() => handleEditCategory(value._id, value)}
-              >
-                <Text variant="h6" text="Edit" />
-              </Button>
+              <Box sx={style.wrap} gap={1}>
+                <Button
+                  variant="outlined"
+                  onClick={() => handleEditCategory(value._id, value)}
+                >
+                  <Text variant="h6" text="Edit" />
+                </Button>
 
-              <Button
-                variant="outlined"
-                color="error"
-                onClick={() => handleOpen(value._id)}
-              >
-                <Text variant="h6" text="Delete" />
-              </Button>
-            </Box>
-          </Grid>
-        ))}
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => handleOpen(value._id)}
+                >
+                  <Text variant="h6" text="Delete" />
+                </Button>
+              </Box>
+            </Grid>
+          ))
+        ) : (
+          <NoData text="categories" />
+        )}
       </Grid>
     </Layout>
   );
