@@ -193,7 +193,7 @@ const Trips = () => {
                 </Box>
               </Box>
 
-              <Text variant="body2" text={trip.description} />
+              <div dangerouslySetInnerHTML={{ __html: trip.description }} />
 
               <Grid container sx={style.wrap}>
                 <Box sx={style.wrap} gap={1}>

@@ -13,6 +13,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import dayjs from "dayjs";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -26,7 +29,15 @@ import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
 
+const useStyles = makeStyles({
+  twoColumns: {
+    columnCount: 2,
+    marginTop: 10,
+  },
+});
+
 const EditTrip = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const { state } = useLocation();
   const [services, setServices] = useState([]);
@@ -210,22 +221,24 @@ const EditTrip = () => {
 
           <Box gap={2}>
             <Text variant="h6" text="Choose services:" />
-            {services?.map((value) => (
-              <FormGroup key={value._id}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedServices?.some(
-                        (service) => service === value._id
-                      )}
-                      onChange={() => handleServiceChange(value._id)}
-                      inputProps={{ "aria-label": "controlled" }}
-                    />
-                  }
-                  label={value.name}
-                />
-              </FormGroup>
-            ))}
+            <Box className={classes.twoColumns}>
+              {services?.map((value) => (
+                <FormGroup key={value._id}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={selectedServices?.some(
+                          (service) => service === value._id
+                        )}
+                        onChange={() => handleServiceChange(value._id)}
+                        inputProps={{ "aria-label": "controlled" }}
+                      />
+                    }
+                    label={value.name}
+                  />
+                </FormGroup>
+              ))}
+            </Box>
           </Box>
         </Grid>
 
@@ -240,13 +253,11 @@ const EditTrip = () => {
         >
           <Box sx={style.desc} gap={1}>
             <Text variant="h6" text="Description:" />
-            <TextField
-              rows={3}
-              multiline
-              variant="outlined"
-              sx={{ width: "80%" }}
+            <ReactQuill
               value={formData.description}
-              onChange={handleInputChange("description")}
+              onChange={(value) =>
+                setFormData({ ...formData, description: value })
+              }
             />
           </Box>
 

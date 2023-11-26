@@ -14,6 +14,9 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -27,7 +30,15 @@ import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
 
+const useStyles = makeStyles({
+  twoColumns: {
+    columnCount: 2,
+    marginTop: 10,
+  },
+});
+
 const AddTrip = () => {
+  const classes = useStyles();
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -183,7 +194,7 @@ const AddTrip = () => {
       <Text variant="h3" text="Add a new trip" sx={style.heading} />
 
       <Grid container gap={8} sx={style.flex}>
-        <Grid container item md={4} sx={style.formContainer} gap={4}>
+        <Grid container item md={5} sx={style.formContainer} gap={4}>
           <Box sx={style.form} gap={2}>
             <Text variant="h6" text="Enter Name" />
             <TextField
@@ -196,17 +207,15 @@ const AddTrip = () => {
 
           <Box sx={style.desc} gap={1}>
             <Text variant="h6" text="Enter description:" />
-            <TextField
-              rows={3}
-              multiline
-              variant="outlined"
-              sx={{ width: "100%" }}
+            <ReactQuill
               value={formData.description}
-              onChange={handleInputChange("description")}
+              onChange={(value) =>
+                setFormData({ ...formData, description: value })
+              }
             />
           </Box>
 
-          <Box sx={style.desc}>
+          <Box sx={style.formContainer}>
             <Text variant="h6" text="Select start date:" />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
@@ -219,7 +228,7 @@ const AddTrip = () => {
             </LocalizationProvider>
           </Box>
 
-          <Box sx={style.desc}>
+          <Box sx={style.formContainer}>
             <Text variant="h6" text="Select end date:" />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
@@ -232,21 +241,23 @@ const AddTrip = () => {
             </LocalizationProvider>
           </Box>
 
-          <Box gap={2}>
+          <Box>
             <Text variant="h6" text="Choose services:" />
-            {services?.map((value, index) => (
-              <FormGroup key={index}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={selectedServices.includes(value._id)}
-                      onChange={() => handleServiceChange(value._id)}
-                    />
-                  }
-                  label={value.name}
-                />
-              </FormGroup>
-            ))}
+            <Box className={classes.twoColumns}>
+              {services?.map((value, index) => (
+                <FormGroup key={index}>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={selectedServices.includes(value._id)}
+                        onChange={() => handleServiceChange(value._id)}
+                      />
+                    }
+                    label={value.name}
+                  />
+                </FormGroup>
+              ))}
+            </Box>
           </Box>
         </Grid>
 
@@ -338,24 +349,28 @@ const AddTrip = () => {
             />
           </Box>
 
-          <Box gap={2}>
+          <Box>
             <Text variant="h6" text="Select category:" />
             <FormControl component="fieldset">
-              <RadioGroup
-                aria-labelledby="demo-radio-buttons-group-label"
-                name="radio-buttons-group"
-              >
-                {categories?.map((value, index) => (
-                  <FormControlLabel
-                    key={index}
-                    value={value._id}
-                    control={
-                      <Radio onChange={() => handleCategoryChange(value._id)} />
-                    }
-                    label={value.name}
-                  />
-                ))}
-              </RadioGroup>
+              <Box className={classes.twoColumns}>
+                <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  name="radio-buttons-group"
+                >
+                  {categories?.map((value, index) => (
+                    <FormControlLabel
+                      key={index}
+                      value={value._id}
+                      control={
+                        <Radio
+                          onChange={() => handleCategoryChange(value._id)}
+                        />
+                      }
+                      label={value.name}
+                    />
+                  ))}
+                </RadioGroup>
+              </Box>
             </FormControl>
           </Box>
         </Grid>

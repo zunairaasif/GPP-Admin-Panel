@@ -131,7 +131,7 @@ const TripDetails = () => {
 
         <Box sx={style.flex} gap={1}>
           <Text variant="h5" text="Description:" />
-          <Text variant="body1" sx={style.width} text={formData.description} />
+          <div dangerouslySetInnerHTML={{ __html: formData.description }} />
         </Box>
 
         <Grid container gap={2}>

@@ -22,6 +22,7 @@ const style = {
     },
   },
   desc: {
+    marginBottom: 5,
     display: "flex",
     flexDirection: "column",
   },
