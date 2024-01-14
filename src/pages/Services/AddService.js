@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Box, TextField, Button } from "@mui/material";
+import { Grid, Box, TextField, Button, Typography } from "@mui/material";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
@@ -76,11 +75,9 @@ const AddService = () => {
         text="Error adding a new service!"
       />
 
-      <Text variant="h3" text="Add a new service" sx={style.heading} />
-
       <Grid container gap={10} sx={style.flex}>
         <Box sx={style.form} gap={2}>
-          <Text variant="h6" text="Enter Name" />
+          <Typography variant="h6">Enter Name</Typography>
           <TextField
             size="small"
             sx={style.label}
@@ -90,13 +87,13 @@ const AddService = () => {
         </Box>
 
         <Box sx={style.form} gap={2}>
-          <Text variant="h6" text="Choose icon:" />
+          <Typography variant="h6">Choose icon:</Typography>
           <input type="file" accept="image/*" onChange={handleFileChange} />
         </Box>
       </Grid>
 
       <Button variant="contained" sx={style.addBtn} onClick={handleAddService}>
-        <Text variant="body2" text="Add service" />
+        <Typography variant="body2">Add service</Typography>
       </Button>
     </Layout>
   );

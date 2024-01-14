@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Grid, Box, Button, Switch } from "@mui/material";
+import { Grid, Box, Button, Switch, Typography } from "@mui/material";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import NoData from "../../components/NoData";
@@ -166,9 +165,9 @@ const Trips = () => {
       />
 
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all trips" />
+        <Typography variant="h3">List of all trips</Typography>
         <Button variant="contained" onClick={handleNewTrip} sx={style.button}>
-          <Text variant="body2" text="Add new trip" />
+          <Typography variant="body2">Add new trip</Typography>
         </Button>
       </Grid>
 
@@ -177,13 +176,12 @@ const Trips = () => {
           trip.map((trip, index) => (
             <Grid item md={5.75} container gap={1} sx={style.block} key={index}>
               <Box sx={style.title}>
-                <Text variant="h4" text={trip.name} />
+                <Typography variant="h4">{trip.name}</Typography>
 
                 <Box sx={style.title}>
-                  <Text
-                    variant="body1"
-                    text={trip.status ? "Active" : "Inactive"}
-                  />
+                  <Typography variant="body1">
+                    {trip.status ? "Active" : "Inactive"}
+                  </Typography>
                   <Switch
                     checked={trip.status}
                     onChange={(event) =>
@@ -197,8 +195,8 @@ const Trips = () => {
 
               <Grid container sx={style.wrap}>
                 <Box sx={style.wrap} gap={1}>
-                  <Text variant="h6" text="Price:" />
-                  <Text variant="body2" text={trip.price} />
+                  <Typography variant="h6">Price:</Typography>
+                  <Typography variant="body2">{trip.price}</Typography>
                 </Box>
 
                 <Box sx={style.wrap} gap={1}>
@@ -207,7 +205,7 @@ const Trips = () => {
                     variant="outlined"
                     onClick={() => handleViewDetails(trip._id, trip)}
                   >
-                    <Text variant="body2" text="View Details" />
+                    <Typography variant="body2">View Details</Typography>
                   </Button>
 
                   <EditIcon

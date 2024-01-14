@@ -8,6 +8,7 @@ import {
   InputBase,
   IconButton,
   useMediaQuery,
+  Typography,
 } from "@mui/material";
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
@@ -18,7 +19,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 
 import style from "./style";
-import Text from "../Text";
 import flag from "../../images/flag.png";
 import avatar from "../../images/avatar.png";
 
@@ -75,10 +75,10 @@ export default function Header() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <Text variant="body2" text="Profile" />
+        <Typography variant="body2">Profile</Typography>
       </MenuItem>
       <MenuItem onClick={handelLogout}>
-        <Text variant="body2" text="Logout" />
+        <Typography variant="body2">Logout</Typography>
       </MenuItem>
     </Menu>
   );
@@ -137,7 +137,7 @@ export default function Header() {
                 height={30}
                 style={style.img}
               />
-              <Text variant="body2" text="User" />
+              <Typography variant="body2">User</Typography>
             </IconButton>
           </Grid>
         )}

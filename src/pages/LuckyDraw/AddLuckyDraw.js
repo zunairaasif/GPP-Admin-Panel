@@ -2,13 +2,12 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { Grid, Box, TextField, Button } from "@mui/material";
+import { Grid, Box, TextField, Button, Typography } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
@@ -76,12 +75,14 @@ const AddLuckyDrawy = () => {
         text="Error adding a new lucky draw!"
       />
 
-      <Text variant="h3" text="Add a new lucky draw" sx={style.heading} />
+      <Typography variant="h3" sx={style.heading}>
+        Add a new lucky draw
+      </Typography>
 
       <Grid container gap={8} sx={style.flex}>
         <Grid sx={style.formContainer} gap={4}>
           <Box sx={style.wrap} gap={2}>
-            <Text variant="h6" text="Enter Name" />
+            <Typography variant="h6">Enter Name</Typography>
             <TextField
               size="small"
               value={formData.name}
@@ -90,7 +91,7 @@ const AddLuckyDrawy = () => {
           </Box>
 
           <Box sx={style.wrap} gap={2}>
-            <Text variant="h6" text="End time" />
+            <Typography variant="h6">End time</Typography>
 
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
@@ -106,7 +107,7 @@ const AddLuckyDrawy = () => {
 
         <Grid sx={style.formContainer} gap={4}>
           <Box sx={style.wrap} gap={2}>
-            <Text variant="h6" text="Enter join price" />
+            <Typography variant="h6">Enter join price</Typography>
             <TextField
               size="small"
               value={formData.joinPrice}
@@ -115,7 +116,7 @@ const AddLuckyDrawy = () => {
           </Box>
 
           <Box sx={style.wrap} gap={2}>
-            <Text variant="h6" text="Enter win price" />
+            <Typography variant="h6">Enter win price"</Typography>
             <TextField
               size="small"
               value={formData.winPrice}
@@ -130,7 +131,7 @@ const AddLuckyDrawy = () => {
         sx={style.addBtn}
         onClick={handleAddLuckyDraw}
       >
-        <Text variant="body2" text="Add lucky draw" />
+        <Typography variant="body2">Add lucky draw</Typography>
       </Button>
     </Layout>
   );

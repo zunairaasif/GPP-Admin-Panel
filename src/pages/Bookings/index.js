@@ -1,9 +1,8 @@
 import axios from "axios";
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import NoData from "../../components/NoData";
@@ -39,7 +38,9 @@ const Bookings = () => {
     <Layout>
       <Loader open={loading} />
 
-      <Text variant="h3" text="List of all bookings" sx={style.heading} />
+      <Typography variant="h3" sx={style.heading}>
+        List of all bookings
+      </Typography>
 
       <Grid container gap={2}>
         {bookings ? (
@@ -47,57 +48,55 @@ const Bookings = () => {
             <Grid item container md={5.75} key={index} sx={style.block}>
               <Grid container item gap={1} md={5} sx={style.grid}>
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="User:" />
-                  <Text
-                    variant="body1"
-                    text={booking.user ? booking.user.name : "null"}
-                  />
+                  <Typography variant="h5">User:</Typography>
+                  <Typography variant="body1">
+                    {booking.user ? booking.user.name : "null"}
+                  </Typography>
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Booking:" />
-                  <Text
-                    variant="body1"
-                    text={booking.booking ? booking.booking.name : "null"}
-                  />
+                  <Typography variant="h5">Booking:</Typography>
+                  <Typography variant="body1">
+                    {booking.booking ? booking.booking.name : "null"}
+                  </Typography>
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Price:" />
-                  <Text variant="body1" text={booking.price} />
+                  <Typography variant="h5">Price:</Typography>
+                  <Typography variant="body1">{booking.price}</Typography>
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Number of seats:" />
-                  <Text variant="body1" text={booking.noOfSeats} />
+                  <Typography variant="h5">Number of seats:</Typography>
+                  <Typography variant="body1">{booking.noOfSeats}</Typography>
                 </Box>
               </Grid>
 
               <Grid container item gap={1} md={6} sx={style.grid}>
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Paid:" />
-                  <Text
-                    variant="body1"
-                    text={booking.paid ? "true" : "false"}
-                  />
+                  <Typography variant="h5">Paid:</Typography>
+                  <Typography variant="body1">
+                    {booking.paid ? "true" : "false"}
+                  </Typography>
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Amount Paid:" />
-                  <Text variant="body1" text={booking.amountPaid} />
+                  <Typography variant="h5">Amount Paid:</Typography>
+                  <Typography variant="body1">{booking.amountPaid}</Typography>
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Booking Confirmed:" />
-                  <Text
-                    variant="body1"
-                    text={booking.bookingConfirm ? "true" : "false"}
-                  />
+                  <Typography variant="h5">Booking Confirmed:</Typography>
+                  <Typography variant="body1">
+                    {booking.bookingConfirm ? "true" : "false"}
+                  </Typography>
                 </Box>
 
                 <Box gap={2} sx={style.wrap}>
-                  <Text variant="h5" text="Seat of Choice Price:" />
-                  <Text variant="body1" text={booking.seatOfChoicePrice} />
+                  <Typography variant="h5">Seat of Choice Price:</Typography>
+                  <Typography variant="body1">
+                    {booking.seatOfChoicePrice}
+                  </Typography>
                 </Box>
               </Grid>
             </Grid>

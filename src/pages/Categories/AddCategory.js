@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Box, TextField, Button } from "@mui/material";
+import { Grid, Box, TextField, Button, Typography } from "@mui/material";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
@@ -71,11 +70,13 @@ const AddCategory = () => {
         text="Error adding a new category!"
       />
 
-      <Text variant="h3" text="Add a new category" sx={style.heading} />
+      <Typography variant="h3" sx={style.heading}>
+        Add a new category
+      </Typography>
 
       <Grid container gap={6} sx={style.flex}>
         <Box sx={style.form} gap={2}>
-          <Text variant="h6" text="Enter Name" />
+          <Typography variant="h6">Enter Name</Typography>
           <TextField
             size="small"
             sx={style.label}
@@ -85,13 +86,13 @@ const AddCategory = () => {
         </Box>
 
         <Box sx={style.form} gap={2}>
-          <Text variant="h6" text="Choose icon:" />
+          <Typography variant="h6">Choose icon:</Typography>
           <input type="file" accept="image/*" onChange={handleFileChange} />
         </Box>
       </Grid>
 
       <Button variant="contained" sx={style.addBtn} onClick={handleAddCategory}>
-        <Text variant="body2" text="Add category" />
+        <Typography variant="body2">Add category</Typography>
       </Button>
     </Layout>
   );

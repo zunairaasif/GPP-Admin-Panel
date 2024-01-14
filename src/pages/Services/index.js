@@ -1,12 +1,11 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
-import { Grid, Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Grid, Box, Button, Typography } from "@mui/material";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import NoData from "../../components/NoData";
@@ -113,13 +112,13 @@ const Services = () => {
       />
 
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all services" />
+        <Typography variant="h3">List of all services</Typography>
         <Button
           variant="contained"
           onClick={handleNewService}
           sx={style.button}
         >
-          <Text variant="body2" text="Add new service" />
+          <Typography variant="body2">Add new service</Typography>
         </Button>
       </Grid>
 
@@ -129,7 +128,7 @@ const Services = () => {
             <Grid item md={5.75} container gap={1} sx={style.block} key={index}>
               <Box sx={style.wrap} gap={2}>
                 <img src={value.icon} alt={value.name} width={25} />
-                <Text variant="body1" text={value.name} />
+                <Typography variant="body1">{value.name}</Typography>
               </Box>
 
               <Box sx={style.wrap} gap={2}>

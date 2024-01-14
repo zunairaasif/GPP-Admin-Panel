@@ -8,6 +8,7 @@ import {
   TextField,
   IconButton,
   InputAdornment,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import * as Yup from "yup";
@@ -17,7 +18,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 import style from "./style";
-import Text from "../../components/Text";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -67,7 +67,9 @@ const Login = () => {
         onClose={() => setOpenSnackbar(false)}
       >
         <Alert sx={style.alert} severity="error">
-          <Text variant="subtitl1" text="Invalid phone number or password!" />
+          <Typography variant="subtitl1">
+            Invalid phone number or password!
+          </Typography>
         </Alert>
       </Snackbar>
 
@@ -81,7 +83,9 @@ const Login = () => {
             <Grid container item md={5}>
               <Form style={style.form}>
                 <Grid container gap={3} sx={style.login}>
-                  <Text variant="h1" text="User Login" sx={style.heading} />
+                  <Typography variant="h1" sx={style.heading}>
+                    User Login
+                  </Typography>
                   <Box>
                     <Field
                       as={TextField}
@@ -128,7 +132,7 @@ const Login = () => {
                   </Box>
 
                   <Link to="#" style={style.forgetPswd}>
-                    <Text variant="body2" text="Forget Password?" />
+                    <Typography variant="body2">Forget Password?</Typography>
                   </Link>
 
                   <Button

@@ -4,6 +4,7 @@ import {
   Button,
   Divider,
   ImageList,
+  Typography,
   ImageListItem,
 } from "@mui/material";
 import axios from "axios";
@@ -11,7 +12,6 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import Confirm from "../../components/ConfirmMsg";
@@ -112,17 +112,17 @@ const TripDetails = () => {
 
       <Grid container gap={3} sx={style.detailBlock}>
         <Grid container sx={style.wrap}>
-          <Text variant="h3" text={formData.name} />
+          <Typography variant="h3">{formData.name}</Typography>
           <Box sx={style.action} gap={2}>
             <Button
               variant="contained"
               onClick={() => handleEditTrip(formData.id, formData)}
             >
-              <Text variant="body2" text="Edit" />
+              <Typography variant="body2">Edit</Typography>
             </Button>
 
             <Button variant="contained" color="error" onClick={handleOpen}>
-              <Text variant="body2" text="Delete" />
+              <Typography variant="body2">Delete</Typography>
             </Button>
           </Box>
         </Grid>
@@ -130,74 +130,74 @@ const TripDetails = () => {
         <Divider />
 
         <Box sx={style.flex} gap={1}>
-          <Text variant="h5" text="Description:" />
+          <Typography variant="h5">Description:</Typography>
           <div dangerouslySetInnerHTML={{ __html: formData.description }} />
         </Box>
 
         <Grid container gap={2}>
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Price" />
-            <Text variant="body1" text={formData.price} />
+            <Typography variant="h5">Price</Typography>
+            <Typography variant="body1">{formData.price}</Typography>
           </Box>
 
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Days" />
-            <Text variant="body1" text={formData.days} />
+            <Typography variant="h5">Days</Typography>
+            <Typography variant="body1">{formData.days}</Typography>
           </Box>
 
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Booking Amount" />
-            <Text variant="body1" text={formData.bookingAmount} />
+            <Typography variant="h5">Booking Amount</Typography>
+            <Typography variant="body1">{formData.bookingAmount}</Typography>
           </Box>
 
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Total Seats" />
-            <Text variant="body1" text={formData.totalSeats} />
+            <Typography variant="h5">Total Seats</Typography>
+            <Typography variant="body1">{formData.totalSeats}</Typography>
           </Box>
 
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Seat of choice price" />
-            <Text variant="body1" text={formData.seatOfChoicePrice} />
+            <Typography variant="h5">Seat of choice price</Typography>
+            <Typography variant="body1">
+              {formData.seatOfChoicePrice}
+            </Typography>
           </Box>
 
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Loyality Points" />
-            <Text variant="body1" text={formData.loyaltyPoints} />
+            <Typography variant="h5">Loyality Points</Typography>
+            <Typography variant="body1">{formData.loyaltyPoints}</Typography>
           </Box>
         </Grid>
 
         <Box sx={style.form} gap={1}>
-          <Text variant="h5" text="Status:" />
-          <Text
-            variant="body1"
-            text={formData.status ? "Active" : "Inactive"}
-          />
+          <Typography variant="h5">Status:</Typography>
+          <Typography variant="body1">
+            {formData.status ? "Active" : "Inactive"}
+          </Typography>
         </Box>
 
         <Box sx={style.form} gap={1}>
-          <Text variant="h5" text="Category:" />
-          <Text variant="body1" text={formData.category.name} />
+          <Typography variant="h5">Category:</Typography>
+          <Typography variant="body1">{formData.category.name}</Typography>
         </Box>
 
         <Box sx={style.form} gap={1}>
-          <Text variant="h5" text="Services:" />
-          <Text
-            variant="body1"
-            text={formData.services.map((data) => data.name).join(", ")}
-          />
+          <Typography variant="h5">Services:</Typography>
+          <Typography variant="body1">
+            {formData.services.map((data) => data.name).join(", ")}
+          </Typography>
         </Box>
 
         <Box sx={style.form} gap={1}>
-          <Text variant="h5" text="Start Date:" />
-          <Text variant="body1" text={formData.startDate} />
+          <Typography variant="h5">Start Date:</Typography>
+          <Typography variant="body1">{formData.startDate}</Typography>
         </Box>
 
         <Box sx={style.form} gap={1}>
-          <Text variant="h5" text="End Date:" />
-          <Text variant="body1" text={formData.endDate} />
+          <Typography variant="h5">End Date:</Typography>
+          <Typography variant="body1">{formData.endDate}</Typography>
         </Box>
 
-        <Text variant="h5" text="Images:" />
+        <Typography variant="h5">Images:</Typography>
       </Grid>
 
       <ImageList cols={4}>

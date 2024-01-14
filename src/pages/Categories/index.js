@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Grid, Box, Button } from "@mui/material";
+import { Grid, Box, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import NoData from "../../components/NoData";
@@ -113,13 +112,13 @@ const Categories = () => {
       />
 
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all categories" />
+        <Typography variant="h3">List of all categories</Typography>
         <Button
           variant="contained"
           onClick={handleNewCategory}
           sx={style.button}
         >
-          <Text variant="body2" text="Add new category" />
+          <Typography variant="body2">Add new category</Typography>
         </Button>
       </Grid>
 
@@ -136,7 +135,7 @@ const Categories = () => {
             >
               <Box sx={style.wrap} gap={2}>
                 <img src={value.image} alt={value.name} width={25} />
-                <Text variant="body1" text={value.name} />
+                <Typography variant="body1">{value.name}</Typography>
               </Box>
 
               <Box sx={style.wrap} gap={1}>
@@ -144,7 +143,7 @@ const Categories = () => {
                   variant="outlined"
                   onClick={() => handleEditCategory(value._id, value)}
                 >
-                  <Text variant="h6" text="Edit" />
+                  <Typography variant="h6">Edit</Typography>
                 </Button>
 
                 <Button
@@ -152,7 +151,7 @@ const Categories = () => {
                   color="error"
                   onClick={() => handleOpen(value._id)}
                 >
-                  <Text variant="h6" text="Delete" />
+                  <Typography variant="h6">Delete</Typography>
                 </Button>
               </Box>
             </Grid>

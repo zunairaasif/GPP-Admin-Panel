@@ -5,6 +5,7 @@ import {
   Button,
   TextField,
   RadioGroup,
+  Typography,
   FormControl,
   FormControlLabel,
 } from "@mui/material";
@@ -13,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
@@ -106,12 +106,15 @@ const AddTicket = () => {
         text="Error adding a new ticket!"
       />
 
-      <Text variant="h3" text="Add a new ticket" sx={style.heading} />
+      <Typography variant="h3" sx={style.heading}>
+        Add a new ticket
+      </Typography>
 
       <Grid container sx={style.display}>
         <Grid container item gap={3} md={5} sx={style.grid}>
           <Box gap={2} sx={style.wrap}>
-            <Text variant="h5" text="Enter user" />
+            <Typography variant="h5">Enter user</Typography>
+
             <TextField
               size="small"
               value={formData.name}
@@ -120,7 +123,7 @@ const AddTicket = () => {
           </Box>
 
           <Box gap={2} sx={style.wrap}>
-            <Text variant="h5" text="Enter phone number" />
+            <Typography variant="h5">Enter phone number</Typography>
             <TextField
               size="small"
               value={formData.phoneNumber}
@@ -129,7 +132,7 @@ const AddTicket = () => {
           </Box>
 
           <Box gap={2}>
-            <Text variant="h5" text="Select trip:" />
+            <Typography variant="h5">Select trip:</Typography>
             <FormControl component="fieldset">
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -152,7 +155,7 @@ const AddTicket = () => {
 
         <Grid container item gap={3} md={5.75} sx={style.grid}>
           <Box gap={2} sx={style.wrap}>
-            <Text variant="h5" text="Enter gender" />
+            <Typography variant="h5">Enter gender</Typography>
             <TextField
               size="small"
               value={formData.gender}
@@ -161,7 +164,7 @@ const AddTicket = () => {
           </Box>
 
           <Box gap={2} sx={style.wrap}>
-            <Text variant="h5" text="Enter price" />
+            <Typography variant="h5">Enter price</Typography>
             <TextField
               size="small"
               value={formData.price}
@@ -170,7 +173,7 @@ const AddTicket = () => {
           </Box>
 
           <Box gap={2} sx={style.wrap}>
-            <Text variant="h5" text="Enter no. of seats" />
+            <Typography variant="h5">Enter no. of seats</Typography>
             <TextField
               size="small"
               value={formData.noOfSeats}
@@ -179,7 +182,7 @@ const AddTicket = () => {
           </Box>
 
           <Box gap={2} sx={style.wrap}>
-            <Text variant="h5" text="Enter amount paid" />
+            <Typography variant="h5">Enter amount paid</Typography>
             <TextField
               size="small"
               value={formData.amountPaid}
@@ -188,7 +191,7 @@ const AddTicket = () => {
           </Box>
 
           <Box gap={2} sx={style.wrap}>
-            <Text variant="h5" text="Enter seat of choice price" />
+            <Typography variant="h5">Enter seat of choice price</Typography>
             <TextField
               size="small"
               value={formData.seatOfChoicePrice}
@@ -199,7 +202,7 @@ const AddTicket = () => {
       </Grid>
 
       <Button variant="contained" sx={style.addBtn} onClick={handleAddTrip}>
-        <Text variant="body2" text="Add Ticket" />
+        <Typography variant="body2">Add Ticket</Typography>
       </Button>
     </Layout>
   );

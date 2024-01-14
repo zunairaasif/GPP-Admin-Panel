@@ -8,6 +8,7 @@ import {
   TextField,
   FormGroup,
   InputLabel,
+  Typography,
   FormControl,
   FormControlLabel,
 } from "@mui/material";
@@ -24,7 +25,6 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
@@ -157,7 +157,9 @@ const EditTrip = () => {
         text="Error updating this trip!"
       />
 
-      <Text variant="h3" text="Edit trip" sx={style.heading} />
+      <Typography variant="h3" sx={style.heading}>
+        Edit trip
+      </Typography>
 
       <Grid container gap={8} sx={style.flex}>
         <Grid
@@ -170,7 +172,7 @@ const EditTrip = () => {
           sx={style.formContainer}
         >
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Name:" />
+            <Typography variant="h6">Name:</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -181,7 +183,7 @@ const EditTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Price:" />
+            <Typography variant="h6">Price:</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -192,7 +194,7 @@ const EditTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Days:" />
+            <Typography variant="h6">Days:</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -203,7 +205,7 @@ const EditTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Status:" />
+            <Typography variant="h6">Status:</Typography>
             <FormControl sx={{ width: "50%" }}>
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select
@@ -220,7 +222,7 @@ const EditTrip = () => {
           </Box>
 
           <Box gap={2}>
-            <Text variant="h6" text="Choose services:" />
+            <Typography variant="h6">Choose services:</Typography>
             <Box className={classes.twoColumns}>
               {services?.map((value) => (
                 <FormGroup key={value._id}>
@@ -252,7 +254,7 @@ const EditTrip = () => {
           sx={style.formContainer}
         >
           <Box sx={style.desc} gap={1}>
-            <Text variant="h6" text="Description:" />
+            <Typography variant="h6">Description:</Typography>
             <ReactQuill
               value={formData.description}
               onChange={(value) =>
@@ -286,7 +288,7 @@ const EditTrip = () => {
       </Grid>
 
       <Button variant="contained" sx={style.addBtn} onClick={handleEditTrip}>
-        <Text variant="body2" text="Edit Trip" />
+        <Typography variant="body2">Edit Trip</Typography>
       </Button>
     </Layout>
   );

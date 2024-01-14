@@ -4,10 +4,9 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
+  Typography,
 } from "@mui/material";
 import React from "react";
-
-import Text from "../Text";
 
 const Confirm = ({ open, handleClose, handleDelete }) => {
   return (
@@ -20,7 +19,9 @@ const Confirm = ({ open, handleClose, handleDelete }) => {
       <DialogTitle id="alert-dialog-title">Delete</DialogTitle>
 
       <DialogContent>
-        <Text variant="body1" text="Are you sure you want to delete?" />
+        <Typography variant="body1">
+          Are you sure you want to delete?
+        </Typography>
       </DialogContent>
 
       <DialogActions>

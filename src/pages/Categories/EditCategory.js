@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Grid, Box, TextField, Button } from "@mui/material";
+import { Grid, Box, TextField, Button, Typography } from "@mui/material";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
@@ -69,11 +68,13 @@ const EditCategory = () => {
         text="Error updating this category!"
       />
 
-      <Text variant="h3" text="Edit category" sx={style.heading} />
+      <Typography variant="h3" sx={style.heading}>
+        Edit category
+      </Typography>
 
       <Grid container gap={6} sx={style.flex}>
         <Box sx={style.form} gap={2}>
-          <Text variant="h6" text="Name:" />
+          <Typography variant="h6">Name:</Typography>
           <TextField
             size="small"
             sx={style.label}
@@ -88,7 +89,7 @@ const EditCategory = () => {
           sx={style.addBtn}
           onClick={handleEditCategory}
         >
-          <Text variant="body2" text="Edit category" />
+          <Typography variant="body2">Edit category</Typography>
         </Button>
       </Grid>
     </Layout>

@@ -1,13 +1,11 @@
 import React from "react";
-import { Grid } from "@mui/material";
-
-import Text from "../Text";
 import style from "./style";
+import { Grid, Typography } from "@mui/material";
 
 const NoData = ({ text }) => {
   return (
     <Grid container sx={style.container}>
-      <Text variant="h2" text={`No ${text} found!`} />
+      <Typography variant="h2">{`No ${text} found!`}</Typography>
     </Grid>
   );
 };

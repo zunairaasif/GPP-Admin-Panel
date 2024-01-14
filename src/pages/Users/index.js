@@ -7,6 +7,7 @@ import {
   TableHead,
   TableBody,
   TableCell,
+  Typography,
   TableContainer,
   TablePagination,
 } from "@mui/material";
@@ -16,7 +17,6 @@ import React, { useState, useEffect } from "react";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 
@@ -77,7 +77,7 @@ const Users = () => {
       <Loader open={loading} />
 
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all Users" />
+        <Typography variant="h3">List of all Users</Typography>
 
         <Button variant="contained" sx={style.button}>
           <FileDownloadIcon fontSize="small" />
@@ -91,7 +91,7 @@ const Users = () => {
             filename={"users.csv"}
             style={style.csv}
           >
-            <Text variant="body2" text="Export" />
+            <Typography variant="body2">Export</Typography>
           </CSVLink>
         </Button>
       </Grid>
@@ -110,7 +110,7 @@ const Users = () => {
                       backgroundColor: "#2a2f42",
                     }}
                   >
-                    <Text variant="h5" text={column.label} />
+                    <Typography variant="h5"> {column.label}</Typography>
                   </TableCell>
                 ))}
               </TableRow>

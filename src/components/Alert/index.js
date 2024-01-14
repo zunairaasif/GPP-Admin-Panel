@@ -1,8 +1,6 @@
 import React from "react";
-import { Slide, Alert, Snackbar } from "@mui/material";
-
-import Text from "../Text";
 import style from "./style";
+import { Slide, Alert, Snackbar, Typography } from "@mui/material";
 
 const AlertMessage = ({ open, onClose, severity, text }) => (
   <Snackbar
@@ -15,7 +13,7 @@ const AlertMessage = ({ open, onClose, severity, text }) => (
     anchorOrigin={{ vertical: "top", horizontal: "right" }}
   >
     <Alert sx={style.alert} severity={severity}>
-      <Text variant="body2" text={text} />
+      <Typography variant="body2">{text}</Typography>
     </Alert>
   </Snackbar>
 );

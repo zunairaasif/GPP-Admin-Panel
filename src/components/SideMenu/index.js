@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import FlightIcon from "@mui/icons-material/Flight";
@@ -12,7 +12,6 @@ import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 
 import style from "./style";
-import Text from "../Text";
 
 const SideMenu = () => {
   const location = useLocation();
@@ -30,8 +29,10 @@ const SideMenu = () => {
 
   return (
     <Grid container item md={2} sm={3} sx={style.sideMenu}>
-      <Text variant="h5" text="Ghoomo Phiro Pakistan" sx={style.heading} />
-      <Text variant="subtitle2" text="MENU" />
+      <Typography variant="h5" sx={style.heading}>
+        Ghoomo Phiro Pakistan
+      </Typography>
+      <Typography variant="subtitle2">MENU</Typography>
 
       <Grid sx={style.menuItems}>
         <Link style={style.link} to="/trips">
@@ -46,7 +47,7 @@ const SideMenu = () => {
             }
           >
             <FlightIcon fontSize="small" sx={style.icon} />
-            <Text variant="body2" text="Trips" />
+            <Typography variant="body2">Trips</Typography>
           </Grid>
         </Link>
 
@@ -61,7 +62,7 @@ const SideMenu = () => {
             }
           >
             <MiscellaneousServicesIcon fontSize="small" sx={style.icon} />
-            <Text variant="body2" text="Services" />
+            <Typography variant="body2">Services</Typography>
           </Grid>
         </Link>
 
@@ -76,7 +77,7 @@ const SideMenu = () => {
             }
           >
             <CategoryIcon fontSize="small" sx={style.icon} />
-            <Text variant="body2" text="Categories" />
+            <Typography variant="body2">Categories</Typography>
           </Grid>
         </Link>
 
@@ -90,7 +91,7 @@ const SideMenu = () => {
             }
           >
             <BookOnlineIcon fontSize="small" sx={style.icon} />
-            <Text variant="body2" text="Bookings" />
+            <Typography variant="body2">Bookings</Typography>
           </Grid>
         </Link>
 
@@ -105,7 +106,7 @@ const SideMenu = () => {
             }
           >
             <ConfirmationNumberIcon fontSize="small" sx={style.icon} />
-            <Text variant="body2" text="Tickets" />
+            <Typography variant="body2">Tickets</Typography>
           </Grid>
         </Link>
 
@@ -120,7 +121,7 @@ const SideMenu = () => {
             }
           >
             <RedeemIcon fontSize="small" sx={style.icon} />
-            <Text variant="body2" text="Lucky Draws" />
+            <Typography variant="body2">Lucky Draws</Typography>
           </Grid>
         </Link>
 
@@ -135,15 +136,17 @@ const SideMenu = () => {
             }
           >
             <PeopleIcon fontSize="small" sx={style.icon} />
-            <Text variant="body2" text="Users" />
+            <Typography variant="body2">Users</Typography>
           </Grid>
         </Link>
 
-        <Text variant="subtitle2" text="Settings" sx={style.setting} />
+        <Typography variant="subtitle2" sx={style.setting}>
+          Settings
+        </Typography>
 
         <Grid sx={style.menuItem} onClick={handleLogout}>
           <LogoutIcon fontSize="small" sx={style.icon} />
-          <Text variant="body2" text="Logout" />
+          <Typography variant="body2">Logout</Typography>
         </Grid>
       </Grid>
     </Grid>

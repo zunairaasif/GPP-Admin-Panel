@@ -5,6 +5,7 @@ import {
   Button,
   Divider,
   RadioGroup,
+  Typography,
   FormControl,
   FormControlLabel,
 } from "@mui/material";
@@ -13,7 +14,6 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
@@ -97,7 +97,7 @@ const LuckyDrawDetails = () => {
 
       <Grid container gap={3} sx={style.detailBlock}>
         <Grid container sx={style.wrapper}>
-          <Text variant="h3" text={formData.name} />
+          <Typography variant="h3">{formData.name}</Typography>
 
           <Box sx={style.action} gap={2}>
             <Button
@@ -105,7 +105,7 @@ const LuckyDrawDetails = () => {
               onClick={handleWinner}
               sx={style.button}
             >
-              <Text variant="body2" text="Set Winner" />
+              <Typography variant="body2">Set Winner</Typography>
             </Button>
           </Box>
         </Grid>
@@ -114,31 +114,30 @@ const LuckyDrawDetails = () => {
 
         <Grid container gap={2}>
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Join Price" />
-            <Text variant="body1" text={formData.joinPrice} />
+            <Typography variant="h5">Join Price</Typography>
+            <Typography variant="body1">{formData.joinPrice}</Typography>
           </Box>
 
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Win Price" />
-            <Text variant="body1" text={formData.winPrice} />
+            <Typography variant="h5">Win Price</Typography>
+            <Typography variant="body1">{formData.winPrice}</Typography>
           </Box>
 
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="Winner Selected" />
-            <Text
-              variant="body1"
-              text={formData.winnerSelected === true ? "true" : "false"}
-            />
+            <Typography variant="h5">Winner Selected</Typography>
+            <Typography variant="body1">
+              {formData.winnerSelected === true ? "true" : "false"}
+            </Typography>
           </Box>
 
           <Box sx={style.categories} gap={1}>
-            <Text variant="h5" text="End Time" />
-            <Text variant="body1" text={formData.endTime} />
+            <Typography variant="h5">End Time</Typography>
+            <Typography variant="body1">{formData.endTime}</Typography>
           </Box>
         </Grid>
 
         <Box>
-          <Text variant="h5" text="Participants:" />
+          <Typography variant="h5">Participants:</Typography>
           <FormControl component="fieldset">
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"

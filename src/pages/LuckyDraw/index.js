@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Grid, Box, Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Grid, Box, Button, Typography } from "@mui/material";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import NoData from "../../components/NoData";
@@ -86,13 +85,13 @@ const LuckyDraw = () => {
       />
 
       <Grid container sx={style.container}>
-        <Text variant="h3" text="List of all Lucky draws" />
+        <Typography variant="h3">List of all Lucky draws</Typography>
         <Button
           variant="contained"
           onClick={handleNewLuckyDraw}
           sx={style.button}
         >
-          <Text variant="body2" text="Add new Lucky draw" />
+          <Typography variant="body2">Add new Lucky draw</Typography>
         </Button>
       </Grid>
 
@@ -100,23 +99,23 @@ const LuckyDraw = () => {
         {luckyDraws ? (
           luckyDraws.map((value, index) => (
             <Grid item md={4.5} container gap={2} sx={style.block} key={index}>
-              <Text variant="h4" text={value.name} />
+              <Typography variant="h4">{value.name}</Typography>
 
               <Box sx={style.wrapper} gap={1}>
                 <Box sx={style.wrap} gap={1}>
-                  <Text variant="h5" text="Join price:" />
-                  <Text variant="body1" text={value.joinPrice} />
+                  <Typography variant="h5">Join price:</Typography>
+                  <Typography variant="body1">{value.joinPrice}</Typography>
                 </Box>
 
                 <Box sx={style.wrap} gap={1}>
-                  <Text variant="h5" text="Win price:" />
-                  <Text variant="body1" text={value.winPrice} />
+                  <Typography variant="h5">Win price:</Typography>
+                  <Typography variant="body1">{value.winPrice}</Typography>
                 </Box>
               </Box>
 
               <Box sx={style.wrap} gap={1}>
-                <Text variant="h5" text="End time:" />
-                <Text variant="body1" text={value.endTime} />
+                <Typography variant="h5">End time:</Typography>
+                <Typography variant="body1">{value.endTime}</Typography>
               </Box>
 
               <Grid container sx={style.wrapper}>
@@ -125,7 +124,7 @@ const LuckyDraw = () => {
                   variant="outlined"
                   onClick={() => handleViewDetails(value._id, value)}
                 >
-                  <Text variant="body1" text="View Details" />
+                  <Typography variant="body1">View Details</Typography>
                 </Button>
 
                 <Button
@@ -133,7 +132,7 @@ const LuckyDraw = () => {
                   variant="outlined"
                   onClick={() => handleAnnounceWinner(value._id)}
                 >
-                  <Text variant="body1" text="Announce Winner" />
+                  <Typography variant="body1">Announce Winner</Typography>
                 </Button>
               </Grid>
             </Grid>

@@ -12,6 +12,7 @@ import {
   RadioGroup,
   FormControl,
   FormControlLabel,
+  Typography,
 } from "@mui/material";
 import axios from "axios";
 import ReactQuill from "react-quill";
@@ -25,7 +26,6 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import style from "./style";
-import Text from "../../components/Text";
 import Layout from "../../components/Layout";
 import Loader from "../../components/Loader";
 import AlertMessage from "../../components/Alert";
@@ -191,12 +191,14 @@ const AddTrip = () => {
         text="Error adding a new trip!"
       />
 
-      <Text variant="h3" text="Add a new trip" sx={style.heading} />
+      <Typography variant="h3" sx={style.heading}>
+        Add a new trip
+      </Typography>
 
       <Grid container gap={8} sx={style.flex}>
         <Grid container item md={5} sx={style.formContainer} gap={4}>
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter Name" />
+            <Typography variant="h6">Enter Name</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -206,7 +208,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.desc} gap={1}>
-            <Text variant="h6" text="Enter description:" />
+            <Typography variant="h6">Enter description:</Typography>
             <ReactQuill
               value={formData.description}
               onChange={(value) =>
@@ -216,7 +218,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.formContainer}>
-            <Text variant="h6" text="Select start date:" />
+            <Typography variant="h6">Select start date:</Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
@@ -229,7 +231,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.formContainer}>
-            <Text variant="h6" text="Select end date:" />
+            <Typography variant="h6">Select end date:</Typography>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
@@ -242,7 +244,7 @@ const AddTrip = () => {
           </Box>
 
           <Box>
-            <Text variant="h6" text="Choose services:" />
+            <Typography variant="h6">Choose services:</Typography>
             <Box className={classes.twoColumns}>
               {services?.map((value, index) => (
                 <FormGroup key={index}>
@@ -263,7 +265,7 @@ const AddTrip = () => {
 
         <Grid sx={style.formContainer} gap={4}>
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter price" />
+            <Typography variant="h6">Enter price</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -273,7 +275,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter days" />
+            <Typography variant="h6">Enter days</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -283,7 +285,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter total seats" />
+            <Typography variant="h6">Enter total seats</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -293,7 +295,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter seat of choice price" />
+            <Typography variant="h6">Enter seat of choice price</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -303,7 +305,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter loyalty points" />
+            <Typography variant="h6">Enter loyalty points</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -313,7 +315,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter booking amount" />
+            <Typography variant="h6">Enter booking amount</Typography>
             <TextField
               size="small"
               sx={style.label}
@@ -323,7 +325,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Enter status" />
+            <Typography variant="h6">Enter status</Typography>
             <FormControl sx={{ width: "50%" }}>
               <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select
@@ -340,7 +342,7 @@ const AddTrip = () => {
           </Box>
 
           <Box sx={style.form} gap={2}>
-            <Text variant="h6" text="Upload images:" />
+            <Typography variant="h6">Upload images:</Typography>
             <input
               multiple
               type="file"
@@ -350,7 +352,7 @@ const AddTrip = () => {
           </Box>
 
           <Box>
-            <Text variant="h6" text="Select category:" />
+            <Typography variant="h6">Select category:</Typography>
             <FormControl component="fieldset">
               <Box className={classes.twoColumns}>
                 <RadioGroup
@@ -377,7 +379,7 @@ const AddTrip = () => {
       </Grid>
 
       <Button variant="contained" sx={style.addBtn} onClick={handleAddTrip}>
-        <Text variant="body2" text="Add Trip" />
+        <Typography variant="body2">Add Trip</Typography>
       </Button>
     </Layout>
   );
